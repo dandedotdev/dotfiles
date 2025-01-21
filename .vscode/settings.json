@@ -11,6 +11,7 @@
 		"rust": "html"
 	},
 	"terminal.integrated.defaultProfile.osx": "bash",
+	"terminal.integrated.fontFamily": "MesloLGM Nerd Font",
 	"terminal.integrated.profiles.osx": {
 		"bash": {
 			"path": "bash",
