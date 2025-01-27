@@ -1,9 +1,16 @@
 {
 	"css.validate": true,
-	"editor.fontFamily": "Fira Code Retina, Menlo, Monaco, 'Courier New', monospace",
+	"editor.fontFamily": "'Fira Code Retina', Menlo, Monaco, 'Courier New', monospace",
 	"editor.stickyTabStops": true,
 	"editor.fontLigatures": true,
 	"editor.formatOnSave": true,
+	"editor.semanticTokenColorCustomizations": {
+		"[Monokai Vibrant (Rust)]": {
+			"rules": {
+				"enumMember": "#81F900"
+			}
+		}
+	},
 	"editor.wordWrap": "on",
 	"files.autoSave": "onFocusChange",
 	"tailwindCSS.experimental.classRegex": ["class: \"(.*)\""],
