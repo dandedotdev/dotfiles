@@ -1,15 +1,34 @@
 {
 	"css.validate": true,
 	"editor.fontFamily": "'Fira Code Retina', Menlo, Monaco, 'Courier New', monospace",
-	"editor.stickyTabStops": true,
 	"editor.fontLigatures": true,
 	"editor.formatOnSave": true,
-	"editor.semanticTokenColorCustomizations": {
-		"[Monokai Vibrant (Rust)]": {
-			"rules": {
-				"enumMember": "#81F900"
+	"editor.inlineSuggest.enabled": true,
+	"editor.stickyTabStops": true,
+	// "editor.semanticTokenColorCustomizations": {
+	// 	"[Monokai Vibrant (Rust)]": {
+	// 		"rules": {
+	// 			"enumMember": "#81F900"
+	// 		}
+	// 	}
+	// },
+	"editor.tokenColorCustomizations": {
+		"textMateRules": [
+			{
+				"name": "Comment",
+				"scope": [
+					"comment",
+					"comment.block",
+					"comment.block.documentation",
+					"comment.line",
+					"comment.line.double-slash",
+					"punctuation.definition.comment"
+				],
+				"settings": {
+					"fontStyle": "italic"
+				}
 			}
-		}
+		]
 	},
 	"editor.wordWrap": "on",
 	"files.autoSave": "onFocusChange",
@@ -34,5 +53,9 @@
 		"editor.defaultFormatter": "rust-lang.rust-analyzer",
 		"editor.formatOnSave": true,
 		"editor.tabSize": 4
+	},
+	"[toml]": {
+		"editor.defaultFormatter": "tamasfe.even-better-toml",
+		"editor.formatOnSave": true
 	}
 }
