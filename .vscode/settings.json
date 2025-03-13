@@ -12,6 +12,7 @@
 	// 		}
 	// 	}
 	// },
+	"editor.tabSize": 2,
 	"editor.tokenColorCustomizations": {
 		"textMateRules": [
 			{
