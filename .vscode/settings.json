@@ -5,13 +5,6 @@
 	"editor.formatOnSave": true,
 	"editor.inlineSuggest.enabled": true,
 	"editor.stickyTabStops": true,
-	// "editor.semanticTokenColorCustomizations": {
-	// 	"[Monokai Vibrant (Rust)]": {
-	// 		"rules": {
-	// 			"enumMember": "#81F900"
-	// 		}
-	// 	}
-	// },
 	"editor.tabSize": 2,
 	"editor.tokenColorCustomizations": {
 		"textMateRules": [
@@ -33,6 +26,12 @@
 	},
 	"editor.wordWrap": "on",
 	"files.autoSave": "onFocusChange",
+	"rust-analyzer.check.overrideCommand": [
+		"cargo-clippy",
+		"--all-targets",
+		"--workspace",
+		"--message-format=json"
+	],
 	"tailwindCSS.experimental.classRegex": ["class: \"(.*)\""],
 	"tailwindCSS.includeLanguages": {
 		"rust": "html"
