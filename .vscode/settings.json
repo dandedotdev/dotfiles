@@ -46,7 +46,9 @@
 		}
 	},
 	"workbench.editor.customLabels.patterns": {
+		"**/Cargo.toml": "${dirname} (Cargo.toml)",
 		"**/index.*": "${dirname} (index)",
+		"**/lib.*": "${dirname} (lib)",
 		"**/mod.*": "${dirname} (mod)"
 	},
 	"[rust]": {
