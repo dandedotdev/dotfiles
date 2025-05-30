@@ -23,9 +23,17 @@ It's good to put them in `.cursor/rules` and use the extensions `.mdc`.
 📁 Project Root
 └── 📁 .cursor
   └── 📁 rules
-  └── 📄 fyi-doc.mdc
-  └── 📄 fyi-test.mdc
-  └── 📄 fyi-typescript.mdc
-  └── 📄 test-typescript.mdc
-  └── ...
+    └── 📄 code_review.mdc
+    └── 📄 database_create.mdc
+    └── 📄 database_migrate.mdc
+    └── 📄 database_style.mdc
+    └── 📄 doc_critique.mdc
+    └── 📄 fyi_react.mdc
+    └── 📄 fyi_rust.mdc
+    └── 📄 fyi_test.mdc
+    └── 📄 pr_generation.mdc
+    └── 📄 react_hooks.mdc
+    └── 📄 react_ui.mdc
+    └── 📄 test_playwright.mdc
+    └── ...
 ```
