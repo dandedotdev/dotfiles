@@ -31,9 +31,14 @@ It's good to put them in `.cursor/rules` and use the extensions `.mdc`.
     └── 📄 fyi_react.mdc
     └── 📄 fyi_rust.mdc
     └── 📄 fyi_test.mdc
+    └── 📄 github_rule.mdc
+    └── 📄 linear.mcp
     └── 📄 pr_generation.mdc
     └── 📄 react_hooks.mdc
     └── 📄 react_ui.mdc
     └── 📄 test_playwright.mdc
     └── ...
+  └── 📄 mcp.json
 ```
+
+> The `mcp.json` file is used to configure the MCP servers. You can add more instructions in `*.mcp` files in `.cursor/rules` folder.
