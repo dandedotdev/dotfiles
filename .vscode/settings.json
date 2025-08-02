@@ -4,6 +4,7 @@
 	"editor.fontLigatures": true,
 	"editor.formatOnSave": true,
 	"editor.inlineSuggest.enabled": true,
+	"editor.minimap.enabled": true,
 	"editor.stickyTabStops": true,
 	"editor.tabSize": 2,
 	"editor.tokenColorCustomizations": {
@@ -26,6 +27,7 @@
 	},
 	"editor.wordWrap": "on",
 	"files.autoSave": "onFocusChange",
+	"workbench.activityBar.orientation": "vertical",
 	"rust-analyzer.check.overrideCommand": [
 		"cargo-clippy",
 		"--all-targets",
@@ -45,6 +47,7 @@
 			"icon": "terminal-bash"
 		}
 	},
+	"terminal.integrated.suggest.enabled": true,
 	"workbench.editor.customLabels.patterns": {
 		"**/Cargo.toml": "${dirname} (Cargo.toml)",
 		"**/index.*": "${dirname} (index)",
