@@ -48,6 +48,65 @@
 		}
 	},
 	"terminal.integrated.suggest.enabled": true,
+	"todohighlight.keywords": [
+    {
+      "backgroundColor": "none",
+      "color": "#ff375f",
+      "text": "Hard"
+    },
+    {
+      "backgroundColor": "none",
+      "color": "#ffc01e",
+      "text": "Medium"
+    },
+		{
+      "backgroundColor": "none",
+      "color": "#00b8a3",
+      "text": "Easy"
+    },
+    {
+      "backgroundColor": "#39C",
+      "color": "#FFF",
+      "text": "ASK:"
+    },
+    {
+      "backgroundColor": "#C39",
+      "color": "#FFF",
+      "text": "DONE:"
+    },
+    {
+      "backgroundColor": "#966",
+      "color": "#FFF",
+      "text": "MATERIALS:"
+    },
+    {
+      "backgroundColor": "#FA0",
+      "color": "#FFF",
+      "text": "POINT:"
+    },
+    "REF:",
+    "REVIEW:",
+    {
+      "backgroundColor": "#366",
+      "color": "#FFF",
+      "text": "TABLE:"
+    },
+    {
+      "backgroundColor": "#393",
+      "color": "#FFF",
+      "text": "TEXTURE:"
+    },
+    {
+      "backgroundColor": "#F36",
+      "color": "#FFF",
+      "text": "TRY:"
+    },
+    {
+      "backgroundColor": "#C00",
+      "color": "#FFF",
+      "text": "WARNING:"
+    },
+  ],
 	"workbench.editor.customLabels.patterns": {
 		"**/Cargo.toml": "${dirname} (Cargo.toml)",
 		"**/index.*": "${dirname} (index)",
