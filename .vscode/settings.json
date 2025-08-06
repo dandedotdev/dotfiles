@@ -1,54 +1,54 @@
 {
-	"css.validate": true,
-	"editor.fontFamily": "'Fira Code Retina', Menlo, Monaco, 'Courier New', monospace",
-	"editor.fontLigatures": true,
-	"editor.formatOnSave": true,
-	"editor.inlineSuggest.enabled": true,
-	"editor.minimap.enabled": true,
-	"editor.stickyTabStops": true,
-	"editor.tabSize": 2,
-	"editor.tokenColorCustomizations": {
-		"textMateRules": [
-			{
-				"name": "Comment",
-				"scope": [
-					"comment",
-					"comment.block",
-					"comment.block.documentation",
-					"comment.line",
-					"comment.line.double-slash",
-					"punctuation.definition.comment"
-				],
-				"settings": {
-					"fontStyle": "italic"
-				}
-			}
-		]
-	},
-	"editor.wordWrap": "on",
-	"files.autoSave": "onFocusChange",
-	"workbench.activityBar.orientation": "vertical",
-	"rust-analyzer.check.overrideCommand": [
-		"cargo-clippy",
-		"--all-targets",
-		"--workspace",
-		"--message-format=json"
-	],
-	"tailwindCSS.experimental.classRegex": ["class: \"(.*)\""],
-	"tailwindCSS.includeLanguages": {
-		"rust": "html"
-	},
-	"terminal.integrated.defaultProfile.osx": "bash",
-	"terminal.integrated.fontFamily": "MesloLGM Nerd Font",
-	"terminal.integrated.profiles.osx": {
-		"bash": {
-			"path": "bash",
-			"args": ["-l"],
-			"icon": "terminal-bash"
-		}
-	},
-	"terminal.integrated.suggest.enabled": true,
-	"todohighlight.keywords": [
+  "css.validate": true,
+  "editor.fontFamily": "'Fira Code Retina', Menlo, Monaco, 'Courier New', monospace",
+  "editor.fontLigatures": true,
+  "editor.formatOnSave": true,
+  "editor.inlineSuggest.enabled": true,
+  "editor.minimap.enabled": true,
+  "editor.stickyTabStops": true,
+  "editor.tabSize": 2,
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "name": "Comment",
+        "scope": [
+          "comment",
+          "comment.block",
+          "comment.block.documentation",
+          "comment.line",
+          "comment.line.double-slash",
+          "punctuation.definition.comment"
+        ],
+        "settings": {
+          "fontStyle": "italic"
+        }
+      }
+    ]
+  },
+  "editor.wordWrap": "on",
+  "files.autoSave": "onFocusChange",
+  "workbench.activityBar.orientation": "vertical",
+  "rust-analyzer.check.overrideCommand": [
+    "cargo-clippy",
+    "--all-targets",
+    "--workspace",
+    "--message-format=json"
+  ],
+  "tailwindCSS.experimental.classRegex": ["class: \"(.*)\""],
+  "tailwindCSS.includeLanguages": {
+    "rust": "html"
+  },
+  "terminal.integrated.defaultProfile.osx": "bash",
+  "terminal.integrated.fontFamily": "MesloLGM Nerd Font",
+  "terminal.integrated.profiles.osx": {
+    "bash": {
+      "path": "bash",
+      "args": ["-l"],
+      "icon": "terminal-bash"
+    }
+  },
+  "terminal.integrated.suggest.enabled": true,
+  "todohighlight.keywords": [
     {
       "backgroundColor": "none",
       "color": "#ff375f",
@@ -59,7 +59,7 @@
       "color": "#ffc01e",
       "text": "Medium"
     },
-		{
+    {
       "backgroundColor": "none",
       "color": "#00b8a3",
       "text": "Easy"
@@ -105,25 +105,25 @@
       "backgroundColor": "#C00",
       "color": "#FFF",
       "text": "WARNING:"
-    },
+    }
   ],
-	"workbench.editor.customLabels.patterns": {
-		"**/Cargo.toml": "${dirname} (Cargo.toml)",
-		"**/index.*": "${dirname} (index)",
-		"**/lib.*": "${dirname} (lib)",
-		"**/mod.*": "${dirname} (mod)"
-	},
+  "workbench.editor.customLabels.patterns": {
+    "**/Cargo.toml": "${dirname} (Cargo.toml)",
+    "**/index.*": "${dirname} (index)",
+    "**/lib.*": "${dirname} (lib)",
+    "**/mod.*": "${dirname} (mod)"
+  },
   "[css, json, yaml, yml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true
   },
-	"[rust]": {
-		"editor.defaultFormatter": "rust-lang.rust-analyzer",
-		"editor.formatOnSave": true,
-		"editor.tabSize": 4
-	},
-	"[toml]": {
-		"editor.defaultFormatter": "tamasfe.even-better-toml",
-		"editor.formatOnSave": true
-	}
+  "[rust]": {
+    "editor.defaultFormatter": "rust-lang.rust-analyzer",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 4
+  },
+  "[toml]": {
+    "editor.defaultFormatter": "tamasfe.even-better-toml",
+    "editor.formatOnSave": true
+  }
 }
