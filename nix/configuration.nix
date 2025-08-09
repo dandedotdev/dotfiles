@@ -223,6 +223,18 @@ in
 						sha256 = "UYMJf0F8YjH1s7szIdTDG7t31/xjryD3wxogQM4ywOU=";
           }
           {
+            name = "monokai-vibrant-rust";
+            publisher = "DioxusLabs";
+            version = "0.1.0";
+            sha256 = "2KWgFrBEjiHsqBx9xmOLF0s0bdbLalVeVbzBFRvfbB0=";
+          }
+          {
+            name = "triggertaskonsave";
+            publisher = "gruntfuggly";
+            version = "0.2.17";
+            sha256 = "sha256-ax/hkewlH0K+sLkFAvgofD6BjEheRYObAAvt8MA3pqc=";
+          }
+          {
 						name = "vscode-html-css";
 						publisher = "ecmel";
 						version = "2.0.9";
@@ -233,12 +245,6 @@ in
             publisher = "wayou";
             version = "1.0.5";
             sha256 = "CQVtMdt/fZcNIbH/KybJixnLqCsz5iF1U0k+GfL65Ok=";
-          }
-          {
-            name = "monokai-vibrant-rust";
-            publisher = "DioxusLabs";
-            version = "0.1.0";
-            sha256 = "2KWgFrBEjiHsqBx9xmOLF0s0bdbLalVeVbzBFRvfbB0=";
           }
         ];
     })

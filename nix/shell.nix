@@ -45,6 +45,7 @@ mkShell {
   buildInputs = [
     cargo-expand
     cargo-leptos
+    cargo-watch
     commitizen
     cz-cli
     dioxus-cli
