@@ -1,5 +1,12 @@
 {
   "css.validate": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.prettier": "explicit",
+    "source.fixAll.markdownlint": "explicit",
+    "source.organizeImports": "explicit",
+    "source.sortMembers": "explicit"
+  },
   "editor.fontFamily": "'Fira Code Retina', Menlo, Monaco, 'Courier New', monospace",
   "editor.fontLigatures": true,
   "editor.formatOnSave": true,
@@ -26,6 +33,7 @@
     ]
   },
   "editor.wordWrap": "on",
+  "eslint.experimental.useFlatConfig": true,
   "files.autoSave": "onFocusChange",
   "workbench.activityBar.orientation": "vertical",
   "rust-analyzer.check.overrideCommand": [
@@ -107,23 +115,25 @@
       "text": "WARNING:"
     }
   ],
+  "triggerTaskOnSave.tasks": {
+    "rustywind-fix": ["**/*.rs"]
+  },
+  "triggerTaskOnSave.on": true,
+  "triggerTaskOnSave.showNotifications": true,
   "workbench.editor.customLabels.patterns": {
     "**/Cargo.toml": "${dirname} (Cargo.toml)",
     "**/index.*": "${dirname} (index)",
     "**/lib.*": "${dirname} (lib)",
     "**/mod.*": "${dirname} (mod)"
   },
-  "[css, json, yaml, yml]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true
+  "[markdown]": {
+    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
   },
   "[rust]": {
     "editor.defaultFormatter": "rust-lang.rust-analyzer",
-    "editor.formatOnSave": true,
     "editor.tabSize": 4
   },
   "[toml]": {
-    "editor.defaultFormatter": "tamasfe.even-better-toml",
-    "editor.formatOnSave": true
+    "editor.defaultFormatter": "tamasfe.even-better-toml"
   }
 }
