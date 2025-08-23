@@ -205,6 +205,7 @@ in
           ms-vscode-remote.remote-ssh
           rust-lang.rust-analyzer
           supermaven.supermaven
+          svelte.svelte-vscode
           gruntfuggly.todo-tree
           github.vscode-github-actions
           ecmel.vscode-html-css
