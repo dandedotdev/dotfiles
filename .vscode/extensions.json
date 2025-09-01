@@ -25,6 +25,7 @@
     "doggy8088.quicktype-refresh",
     "supermaven.supermaven",
     "mechatroner.rainbow-csv",
+    "ms-vscode-remote.remote-containers",
     "ms-vscode-remote.remote-ssh",
     "charliermarsh.ruff",
     "rust-lang.rust-analyzer",

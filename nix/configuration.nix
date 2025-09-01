@@ -2,14 +2,12 @@
 
 { config, pkgs, ... }:
 let
-  unstable_pkgs =
-    import (builtins.fetchTarball "https://github.com/nixos/nixpkgs/tarball/nixos-unstable")
-      { config = config.nixpkgs.config; };
-in
-{
-  imports = [
-    ./hardware-configuration.nix
-  ];
+  unstable_pkgs = import (builtins.fetchTarball
+    "https://github.com/nixos/nixpkgs/tarball/nixos-unstable") {
+      config = config.nixpkgs.config;
+    };
+in {
+  imports = [ ./hardware-configuration.nix ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -20,10 +18,7 @@ in
     hostName = "dandedotdev-P14s-NixOS";
     networkmanager.enable = true;
     firewall = {
-      allowedTCPPorts = [
-        443
-        80
-      ];
+      allowedTCPPorts = [ 443 80 ];
       logReversePathDrops = true;
       extraCommands = ''
         ip46tables -t mangle -I nixos-fw-rpfilter -p udp -m udp --sport 51820 -j RETURN
@@ -58,10 +53,7 @@ in
   i18n.inputMethod = {
     enable = true;
     type = "fcitx5";
-    fcitx5.addons = with pkgs; [
-      fcitx5-chewing
-      fcitx5-gtk
-    ];
+    fcitx5.addons = with pkgs; [ fcitx5-chewing fcitx5-gtk ];
   };
   # And then install GNOME extension manually
   # https://extensions.gnome.org/extension/261/kimpanel/
@@ -77,10 +69,7 @@ in
   };
   services.printing = {
     enable = true;
-    drivers = [
-      pkgs.foomatic-db
-      pkgs.foomatic-db-ppds
-    ];
+    drivers = [ pkgs.foomatic-db pkgs.foomatic-db-ppds ];
   };
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -94,16 +83,11 @@ in
   users.users.dandedotdev = {
     isNormalUser = true;
     description = "dandedotdev";
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-      "dialout"
-      "wireshark"
-      "docker"
-    ];
-    packages = with pkgs; [
-      #  thunderbird
-    ];
+    extraGroups = [ "networkmanager" "wheel" "dialout" "wireshark" "docker" ];
+    packages = with pkgs;
+      [
+        #  thunderbird
+      ];
   };
 
   virtualisation = {
@@ -183,8 +167,7 @@ in
     unstable_pkgs.code-cursor
     (unstable_pkgs.vscode-with-extensions.override {
       vscode = unstable_pkgs.vscodium;
-      vscodeExtensions =
-        with unstable_pkgs.vscode-extensions;
+      vscodeExtensions = with unstable_pkgs.vscode-extensions;
         [
           alefragnani.bookmarks
           adpyke.codesnap
@@ -202,6 +185,7 @@ in
           jnoortheen.nix-ide
           esbenp.prettier-vscode
           alefragnani.project-manager
+          ms-vscode-remote.remote-containers
           ms-vscode-remote.remote-ssh
           rust-lang.rust-analyzer
           supermaven.supermaven
@@ -215,13 +199,12 @@ in
           wakatime.vscode-wakatime
           redhat.vscode-yaml
 
-        ]
-        ++ unstable_pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+        ] ++ unstable_pkgs.vscode-utils.extensionsFromVscodeMarketplace [
           {
-						name = "dioxus";
-						publisher = "DioxusLabs";
-						version = "0.6.0";
-						sha256 = "UYMJf0F8YjH1s7szIdTDG7t31/xjryD3wxogQM4ywOU=";
+            name = "dioxus";
+            publisher = "DioxusLabs";
+            version = "0.6.0";
+            sha256 = "UYMJf0F8YjH1s7szIdTDG7t31/xjryD3wxogQM4ywOU=";
           }
           {
             name = "monokai-vibrant-rust";
@@ -236,10 +219,10 @@ in
             sha256 = "sha256-ax/hkewlH0K+sLkFAvgofD6BjEheRYObAAvt8MA3pqc=";
           }
           {
-						name = "vscode-html-css";
-						publisher = "ecmel";
-						version = "2.0.9";
-						sha256 = "fDDVfS/5mGvV2qLJ9R7EuwQjnKI6Uelxpj97k9AF0pc=";
+            name = "vscode-html-css";
+            publisher = "ecmel";
+            version = "2.0.9";
+            sha256 = "fDDVfS/5mGvV2qLJ9R7EuwQjnKI6Uelxpj97k9AF0pc=";
           }
           {
             name = "vscode-todo-highlight";
@@ -276,14 +259,7 @@ in
       ohMyZsh = {
         enable = true;
         theme = "bureau";
-        plugins = [
-          "git"
-          "npm"
-          "history"
-          "node"
-          "rust"
-          "deno"
-        ];
+        plugins = [ "git" "npm" "history" "node" "rust" "deno" ];
       };
     };
   };
@@ -303,22 +279,11 @@ in
     ];
     fontconfig = {
       defaultFonts = {
-        emoji = [
-          "Noto Color Emoji"
-        ];
-        monospace = [
-          "Source Code Pro"
-          "Noto Sans Mono TC"
-          "DejaVu Sans Mono"
-        ];
-        sansSerif = [
-          "Noto Sans TC"
-          "DejaVu Sans"
-        ];
-        serif = [
-          "Noto Serif TC"
-          "DejaVu Serif"
-        ];
+        emoji = [ "Noto Color Emoji" ];
+        monospace =
+          [ "Source Code Pro" "Noto Sans Mono TC" "DejaVu Sans Mono" ];
+        sansSerif = [ "Noto Sans TC" "DejaVu Sans" ];
+        serif = [ "Noto Serif TC" "DejaVu Serif" ];
       };
     };
   };
@@ -328,7 +293,7 @@ in
   # ===== Customized ===== #
   # Power Management
   systemd.sleep.extraConfig = ''
-		AllowSuspend=no
+    AllowSuspend=no
     AllowHibernation=yes
     AllowHybridSleep=no
     AllowSuspendThenHibernate=no
