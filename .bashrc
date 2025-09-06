@@ -22,3 +22,5 @@ if [ -f '/Users/dandelion/Dandelion/SDK/google-cloud-sdk/completion.bash.inc' ];
 # kubectl aliases
 [ -f ~/.kubectl_aliases ] && source ~/.kubectl_aliases
 . "$HOME/.local/bin/env"
+
+alias gh-create='gh repo create --private --source=. --remote=origin && git push -u --all && gh browse'
