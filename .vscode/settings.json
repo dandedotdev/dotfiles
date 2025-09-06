@@ -42,6 +42,7 @@
     "--workspace",
     "--message-format=json"
   ],
+  "svelte.enable-ts-plugin": true,
   "tailwindCSS.experimental.classRegex": ["class: \"(.*)\""],
   "tailwindCSS.includeLanguages": {
     "rust": "html"
@@ -135,5 +136,8 @@
   },
   "[toml]": {
     "editor.defaultFormatter": "tamasfe.even-better-toml"
+  },
+  "[typst]": {
+    "editor.defaultFormatter": "myriad-dreamin.tinymist"
   }
 }
