@@ -1,0 +1,48 @@
+# https://github.com/GitAlias/gitalias
+
+[user]
+	name = dandedotdev
+	email = contact@dande.dev
+
+[alias]
+  # git add
+  a = add
+  aa = add --all
+  # git branch
+  b = branch
+  ba = branch --all
+  # git commit
+  c = commit
+  ca = commit --amend
+  cm = commit --message
+  # git checkout
+  co = checkout
+  # git diff
+  d = diff
+  ds = diff --staged
+  # git fetch
+  f = fetch
+  # git merge
+  m = merge
+  # git pull
+  p = pull
+  pr = pull --rebase
+  # git push
+  ps = push
+  psf = push --force
+  pss = push --set-upstream origin $(git branch --show-current)
+  # git rebase
+  rb = rebase
+  rbi = rebase --interactive
+  # git reflog
+  rl = reflog
+  # git status
+	s = status
+  ss = status --short
+  # git worktree
+  wta = "!f() { git worktree add ../$1 $1; }; f"
+  wtan = "!f() { git worktree add -b $1 ../$1; }; f"
+  # utility
+  al = "!git config --get-regexp '^alias\\.' | cut -c 7- | sed 's/ / = /'"
+  tl = tag -n1 --list
+  sl = stash list
