@@ -30,6 +30,7 @@
     "charliermarsh.ruff",
     "rust-lang.rust-analyzer",
     "svelte.svelte-vscode",
+    "myriad-dreamin.tinymist",
     "Gruntfuggly.todo-tree",
     "gruntfuggly.triggertaskonsave",
     "dbaeumer.vscode-eslint",
