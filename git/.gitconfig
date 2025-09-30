@@ -30,6 +30,7 @@
   # git push
   ps = push
   psf = push --force
+  psfwl = push --force-with-lease
   pss = push --set-upstream origin $(git branch --show-current)
   # git rebase
   rb = rebase
