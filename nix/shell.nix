@@ -36,6 +36,7 @@ mkShell {
     trunk
     typos
     wasm-bindgen-cli_0_2_100
+    playwright-driver.browsers
   ];
   depsHostHostPropagated = [
     pkgsCross.aarch64-multiplatform.stdenv.cc
@@ -93,5 +94,7 @@ mkShell {
   CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER = let inherit (stdenv) cc;
   in "${cc}/bin/${cc.targetPrefix}cc";
 
+  PLAYWRIGHT_BROWSERS_PATH = "${playwright-driver.browsers}";
+  PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS=true;
   RUSTFMT = "yew-fmt";
 }
