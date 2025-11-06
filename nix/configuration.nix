@@ -245,6 +245,8 @@ in {
     htop
     # Command-line wrapper for git that makes you better at GitHub
     hub
+    # A focused launcher for your desktop
+    unstable_pkgs.vicinae
   ];
 
   users.defaultUserShell = pkgs.zsh;
