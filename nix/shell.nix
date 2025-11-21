@@ -57,6 +57,7 @@ mkShell {
     pnpm
     postgresql
     rustywind
+    typescript
     yew-fmt
   ];
 
