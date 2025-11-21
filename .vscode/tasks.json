@@ -5,6 +5,17 @@
       "label": "rustywind-fix",
       "type": "shell",
       "command": "cargo make rustywind-fix"
+    },
+    {
+      "label": "tsc-no-emit",
+      "type": "shell",
+      "command": "tsc",
+      "args": ["--noEmit"],
+      "problemMatcher": "$tsc",
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      }
     }
   ]
 }
