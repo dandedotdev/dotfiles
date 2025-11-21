@@ -39,6 +39,7 @@
     "wix.vscode-import-cost",
     "DavidAnson.vscode-markdownlint",
     "unifiedjs.vscode-mdx",
+    "jakobhoeg.vscode-pokemon",
     "GitHub.vscode-pull-request-github",
     "bradlc.vscode-tailwindcss",
     "wayou.vscode-todo-highlight",
