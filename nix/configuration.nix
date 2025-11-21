@@ -195,6 +195,7 @@ in {
           ecmel.vscode-html-css
           wix.vscode-import-cost
           davidanson.vscode-markdownlint
+          jakobhoeg.vscode-pokemon
           bradlc.vscode-tailwindcss
           wakatime.vscode-wakatime
           redhat.vscode-yaml
