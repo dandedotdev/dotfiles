@@ -7,7 +7,7 @@ let
     "https://github.com/oxalica/rust-overlay/archive/master.tar.gz");
 
   pkgs = import
-    (fetchTarball "https://github.com/nixos/nixpkgs/tarball/nixos-25.05") {
+    (fetchTarball "https://github.com/nixos/nixpkgs/tarball/nixos-25.11") {
       overlays = [ rust_overlay ];
     };
 
@@ -20,7 +20,12 @@ mkShell {
     cargo-cache
     cargo-edit
     cargo-flamegraph
-    cargo-llvm-cov
+    #cargo-llvm-cov
+    # Sandbox issue
+    # https://discourse.nixos.org/t/security-fix-nix-derivation-sandbox-escape/47778
+    (pkgs.cargo-llvm-cov.overrideAttrs (oldAttrs: {
+      doCheck = false;
+    }))
     cargo-make
     cargo-nextest
     cargo-outdated

@@ -126,7 +126,7 @@ in {
     gimp-with-plugins
     inkscape-with-extensions
     libreoffice-fresh
-    libsForQt5.kdenlive
+    kdePackages.kdenlive
     obs-studio
     vlc
 
@@ -291,7 +291,7 @@ in {
     };
   };
 
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
 
   # ===== Customized ===== #
   # Power Management
