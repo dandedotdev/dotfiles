@@ -55,14 +55,15 @@ in {
     type = "fcitx5";
     fcitx5.addons = with pkgs; [ fcitx5-chewing fcitx5-gtk ];
   };
+
   # And then install GNOME extension manually
   # https://extensions.gnome.org/extension/261/kimpanel/
   # The 3rd step is to add the relevant settings to environment.system packages
   # Just take a look when go through environment.system settings
-
+  # https://github.com/GNOME/gnome-session/commit/21f10a9edac66a8e03419b03032ad7895b577d32
+  services.displayManager.gdm.enable = true;
+  services.desktopManager.gnome.enable = true;
   services.xserver.enable = true;
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
   services.xserver.xkb = {
     layout = "us";
     variant = "altgr-intl";
