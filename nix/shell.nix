@@ -34,9 +34,12 @@ mkShell {
     cargo-zigbuild
     clippy
     diesel-cli
+    just
     llvmPackages.bintools # To use lld
+    openssl
     pkg-config
     rust
+    sqlx-cli
     taplo
     trunk
     typos

@@ -1,0 +1,21 @@
+#:schema https://json.schemastore.org/rust-toolchain.json
+
+[toolchain]
+channel = "nightly"
+components = [
+  "cargo",
+  "clippy",
+  "miri",
+  "rust-analyzer",
+  "rust-docs",
+  "rust-src",
+  "rustc",
+  "rustfmt",
+]
+
+targets = [
+  # 64bits Linux Desktop
+  "x86_64-unknown-linux-gnu",
+  # Apple Mac M series
+  "aarch64-apple-darwin",
+]
