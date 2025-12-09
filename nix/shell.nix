@@ -32,19 +32,18 @@ mkShell {
     cargo-tarpaulin
     cargo-udeps
     cargo-zigbuild
-    clippy
     diesel-cli
     just
     llvmPackages.bintools # To use lld
     openssl
     pkg-config
+    playwright-driver.browsers
     rust
     sqlx-cli
     taplo
     trunk
     typos
     wasm-bindgen-cli_0_2_100
-    playwright-driver.browsers
   ];
   depsHostHostPropagated = [
     pkgsCross.aarch64-multiplatform.stdenv.cc
