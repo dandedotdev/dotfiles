@@ -52,20 +52,20 @@ mkShell {
   ];
   buildInputs = [
     cargo-expand
-    cargo-leptos
+    #cargo-leptos
     cargo-watch
     commitizen
     cz-cli
-    dioxus-cli
+    #dioxus-cli
     fontconfig
-    leptosfmt
+    #leptosfmt
     nodejs
     patchelf
     pnpm
     postgresql
-    rustywind
+    #rustywind
     typescript
-    yew-fmt
+    #yew-fmt
   ];
 
   LIBCLANG_PATH = "${libclang.lib}/lib";
@@ -104,5 +104,5 @@ mkShell {
 
   PLAYWRIGHT_BROWSERS_PATH = "${playwright-driver.browsers}";
   PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS=true;
-  RUSTFMT = "yew-fmt";
+  #RUSTFMT = "yew-fmt";
 }
