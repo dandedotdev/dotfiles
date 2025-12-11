@@ -42,3 +42,9 @@ It's good to put them in `.cursor/rules` and use the extensions `.mdc`.
 ```
 
 > The `mcp.json` file is used to configure the MCP servers. You can add more instructions in `*.mcp` files in `.cursor/rules` folder.
+
+## Acknowledgement
+
+Some of the cursor rules are from other experts:
+
+- [Cursor Rules for Better AI Development by Matt Pocock](https://www.totaltypescript.com/cursor-rules-for-better-ai-development)
