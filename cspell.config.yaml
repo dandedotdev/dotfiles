@@ -45,11 +45,14 @@ words: [
     'tasklists',
     'ungroup',
     'unparse',
+    'worktree',
+    'worktrees',
     # ===== Rust ===== #
     'askama',
     'binop',
     'bindgen',
     'binstall',
+    'bmdavis419',
     'codegen',
     'cdylib',
     'clippy',
@@ -71,10 +74,11 @@ words: [
     'thiserror',
     'walkdir',
     # ===== Username ===== #
-    'superfly',
     'dande',
     'dandedotdev',
     'itehax',
+    'pocock',
+    'superfly',
     'timlrx',
   ]
 ignoreWords: []

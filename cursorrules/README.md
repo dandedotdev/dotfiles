@@ -1,11 +1,13 @@
-# Cursor Rules
+# Cursor
+
+## Rules
 
 There are two types of cursor rules:
 
 - global cursor rules
 - local cursor rules
 
-## Global Cursor Rules
+### Global Cursor Rules
 
 Put the following content in `Cursor Settings > Rules`:
 
@@ -15,7 +17,7 @@ be very direct. be very concrete. when i ask questions, make me really understan
 when generating commit message, following conventional commit and start with a category such as `feat:`, `chore:` or `fix:`, and only give one line commit message.
 ```
 
-## Local Cursor Rules
+### Local Cursor Rules
 
 It's good to put them in `.cursor/rules` and use the extensions `.mdc`.
 
@@ -43,8 +45,20 @@ It's good to put them in `.cursor/rules` and use the extensions `.mdc`.
 
 > The `mcp.json` file is used to configure the MCP servers. You can add more instructions in `*.mcp` files in `.cursor/rules` folder.
 
-## Acknowledgement
+### Acknowledgement
 
 Some of the cursor rules are from other experts:
 
 - [Cursor Rules for Better AI Development by Matt Pocock](https://www.totaltypescript.com/cursor-rules-for-better-ai-development)
+
+## Worktrees
+
+Configure git worktrees for parallel development across multiple branches in the same repository.
+
+> - [Parallel Agents | Cursor Docs](https://cursor.com/docs/configuration/worktrees)
+
+## Better Coding Agents
+
+You can clone repositories as git subtrees into your project. This provides excellent documentation for AI assistants, as they can reference and learn from these codebases.
+
+> - [bmdavis419/.better-coding-agents](https://github.com/bmdavis419/.better-coding-agents)
