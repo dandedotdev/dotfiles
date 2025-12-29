@@ -1,3 +1,53 @@
+# lld
+export PATH="/opt/homebrew/opt/lld/bin:$PATH"
+
+# llvm
+export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+
+# nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
+load_nvmrc() {
+  local nvmrc_path
+  nvmrc_path="$(nvm_find_nvmrc)"
+
+  if [ -n "$nvmrc_path" ]; then
+    local nvmrc_node_version
+    nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+
+    if [ "$nvmrc_node_version" = "N/A" ]; then
+      nvm install
+    elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
+      nvm use
+    fi
+  elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$(nvm version)" != "$(nvm version default)" ]; then
+    echo "Reverting to nvm default version"
+    nvm use default
+  fi
+}
+
+PROMPT_COMMAND="load_nvmrc; $PROMPT_COMMAND"
+
+# pnpm
+export PNPM_HOME="/Users/dandelion/Library/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+
+# oh-my-posh
+eval "$(/opt/homebrew/bin/oh-my-posh init bash --config ~/.poshthemes/montys.omp.json)"
+
+# bash-completion
+[[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
+
+# Enable history search
+bind '"\e[A": history-search-backward' # ↑ to search backward
+bind '"\e[B": history-search-forward' # ↓ to search forward
+
+# Enable autocompletion
+bind 'set show-all-if-ambiguous on'
+bind 'set completion-ignore-case on'
+bind 'set menu-complete-display-prefix on'
+
 # just autocompletion
 # https://github.com/casey/just?tab=readme-ov-file#shell-completion-scripts
 _just() {
@@ -173,56 +223,6 @@ if [[ "${BASH_VERSINFO[0]}" -eq 4 && "${BASH_VERSINFO[1]}" -ge 4 || "${BASH_VERS
 else
     complete -F _just -o bashdefault -o default just
 fi
-
-# lld
-export PATH="/opt/homebrew/opt/lld/bin:$PATH"
-
-# llvm
-export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
-
-# nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-
-load_nvmrc() {
-  local nvmrc_path
-  nvmrc_path="$(nvm_find_nvmrc)"
-
-  if [ -n "$nvmrc_path" ]; then
-    local nvmrc_node_version
-    nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
-
-    if [ "$nvmrc_node_version" = "N/A" ]; then
-      nvm install
-    elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
-      nvm use
-    fi
-  elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$(nvm version)" != "$(nvm version default)" ]; then
-    echo "Reverting to nvm default version"
-    nvm use default
-  fi
-}
-
-PROMPT_COMMAND="load_nvmrc; $PROMPT_COMMAND"
-
-# pnpm
-export PNPM_HOME="/Users/dandelion/Library/pnpm"
-export PATH="$PNPM_HOME:$PATH"
-
-# oh-my-posh
-eval "$(/opt/homebrew/bin/oh-my-posh init bash --config ~/.poshthemes/montys.omp.json)"
-
-# bash-completion
-[[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
-
-# Enable history search
-bind '"\e[A": history-search-backward' # ↑ to search backward
-bind '"\e[B": history-search-forward' # ↓ to search forward
-
-# Enable autocompletion
-bind 'set show-all-if-ambiguous on'
-bind 'set completion-ignore-case on'
-bind 'set menu-complete-display-prefix on'
 
 # rust
 export PATH="$HOME/.cargo/bin:$PATH"
