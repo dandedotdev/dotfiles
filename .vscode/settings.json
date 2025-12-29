@@ -47,15 +47,8 @@
   "tailwindCSS.includeLanguages": {
     "rust": "html"
   },
-  "terminal.integrated.defaultProfile.osx": "bash",
+  "terminal.integrated.defaultProfile.osx": "zsh",
   "terminal.integrated.fontFamily": "MesloLGM Nerd Font",
-  "terminal.integrated.profiles.osx": {
-    "bash": {
-      "path": "bash",
-      "args": ["-l"],
-      "icon": "terminal-bash"
-    }
-  },
   "terminal.integrated.suggest.enabled": true,
   "todohighlight.keywords": [
     {
