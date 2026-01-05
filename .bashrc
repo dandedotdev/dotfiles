@@ -34,7 +34,9 @@ export PNPM_HOME="/Users/dandelion/Library/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 
 # oh-my-posh
-eval "$(/opt/homebrew/bin/oh-my-posh init bash --config ~/.poshthemes/montys.omp.json)"
+if command -v oh-my-posh >/dev/null 2>&1; then
+  eval "$(oh-my-posh init bash --config ~/.poshthemes/montys.omp.json)"
+fi
 
 # bash-completion
 [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
