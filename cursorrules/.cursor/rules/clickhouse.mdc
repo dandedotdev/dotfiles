@@ -1,0 +1,339 @@
+---
+description: Collection of best practices, tips, and techniques for working with ClickHouse
+alwaysApply: false
+---
+
+## Query Analysis & Optimization
+
+### `EXPLAIN` Statement
+
+```sql
+EXPLAIN [clickhouse_statement]
+```
+
+The `EXPLAIN` statement helps you understand and optimize ClickHouse query performance by showing the query execution plan.
+
+**Usage examples:**
+
+```sql
+-- Basic explain
+EXPLAIN SELECT * FROM my_table WHERE id = 1;
+
+-- Detailed pipeline analysis
+EXPLAIN PIPELINE SELECT * FROM my_table;
+
+-- Analyze query with indexes
+EXPLAIN indexes = 1 SELECT * FROM my_table WHERE date > '2024-01-01';
+```
+
+**Key benefits:**
+
+- Understand query execution flow
+- Identify performance bottlenecks
+- Verify index usage
+- Optimize JOIN strategies
+- Validate query plans before production
+
+### Analyzing Query Performance
+
+To analyze historical query performance:
+
+```sql
+SELECT
+    event_time,
+    query_duration_ms,
+    read_rows,
+    read_bytes,
+    result_rows,
+    memory_usage,
+    query
+FROM system.query_log
+WHERE type = 'QueryFinish'
+ORDER BY event_time DESC
+LIMIT 20;
+```
+
+**Useful filters:**
+
+```sql
+-- Find slow queries
+WHERE query_duration_ms > 1000
+
+-- Find memory-intensive queries
+WHERE memory_usage > 1000000000
+
+-- Find queries reading many rows
+WHERE read_rows > 10000000
+```
+
+---
+
+## ReplacingMergeTree: Querying Latest Rows
+
+### Background
+
+`ReplacingMergeTree` does not guarantee immediate row replacement. For the same logical key, multiple physical rows may coexist until background merges occur:
+
+```txt
+(date, code) → multiple versions distinguished by `created_at`
+```
+
+If a query requires logically latest rows, this must be enforced at query time, not assumed from the storage engine.
+
+### Problem Statement
+
+Given a `ReplacingMergeTree` table:
+
+```sql
+us.stock_quote(date, code, ..., created_at)
+```
+
+**Goal**: Retrieve the latest row per `(date, code)` ordered by date, without relying on:
+
+- Background merges
+- `FINAL` keyword (expensive on large tables)
+
+### Approaches Comparison
+
+#### Approach 1: JOIN with Aggregated Subquery
+
+```sql
+WITH tmp AS (
+    SELECT
+        date,
+        code,
+        MAX(created_at) AS merge_key
+    FROM us.stock_quote
+    WHERE code = 'NVDA'
+    GROUP BY date, code
+)
+SELECT t.*
+FROM us.stock_quote AS t
+INNER JOIN tmp
+    ON t.date = tmp.date
+   AND t.code = tmp.code
+   AND t.created_at = tmp.merge_key
+ORDER BY date ASC;
+```
+
+**Query Plan:**
+
+```shell
+Expression (Project names)
+  Sorting (Sorting for ORDER BY)
+    Expression ((Before ORDER BY + Projection))
+      Expression (Post Join Actions)
+        Join
+          Expression (Left Pre Join Actions)
+            ReadFromMergeTree (us.stock_quote)
+          Expression (Right Pre Join Actions)
+            Aggregating
+              Expression (Before GROUP BY)
+                ReadFromMergeTree (us.stock_quote)
+```
+
+**Characteristics:**
+
+- Scans the same table twice
+- Materializes aggregation results
+- Constructs full JOIN pipeline
+- Memory usage grows with key cardinality
+
+**Evaluation:**
+
+- ✔ Correct results
+- ❌ Expensive
+- ❌ Poor scalability on large tables
+
+**Performance:**
+
+- Query duration: ~1,400ms
+- Rows read: 17,124,400
+- Memory usage: ~17.8MB
+
+---
+
+#### Approach 2: Tuple IN with Subquery ⭐
+
+```sql
+SELECT *
+FROM us.stock_quote
+WHERE (date, code, created_at) IN (
+    SELECT
+        date,
+        code,
+        MAX(created_at)
+    FROM us.stock_quote
+    WHERE code = 'NVDA'
+    GROUP BY date, code
+)
+ORDER BY date ASC;
+```
+
+**Query Plan:**
+
+```shell
+CreatingSets (Create sets before main query execution)
+  Expression (Project names)
+    Sorting (Sorting for ORDER BY)
+      Expression ((Before ORDER BY + Projection))
+        Expression ((WHERE + Change column names to column identifiers))
+          ReadFromMergeTree (us.stock_quote)
+```
+
+**Characteristics:**
+
+- Creates a set before main query execution
+- Single-pass read with set membership check
+- More efficient than JOIN approach
+
+**Evaluation:**
+
+- ✔ Correct results
+- ✔ Better than JOIN
+- ✔ Cleaner query plan
+
+**Performance:**
+
+- Query duration: ~1,500ms
+- Rows read: 17,122,361
+- Memory usage: ~17.6MB
+
+---
+
+#### Approach 3: GROUP BY with argMax ⭐⭐ (Recommended)
+
+```sql
+SELECT
+    date,
+    code,
+    argMax(name, created_at) AS name,
+    argMax(open, created_at) AS open,
+    argMax(high, created_at) AS high,
+    argMax(low, created_at) AS low,
+    argMax(close, created_at) AS close,
+    argMax(trade_volume, created_at) AS trade_volume,
+    argMax(trade_value, created_at) AS trade_value,
+    argMax(transaction, created_at) AS transaction,
+    argMax(block_aggregate_trade_volume, created_at) AS block_aggregate_trade_volume,
+    argMax(exchange, created_at) AS exchange
+FROM us.stock_quote
+WHERE code = 'NVDA'
+GROUP BY date, code
+ORDER BY date ASC;
+```
+
+**Query Plan:**
+
+```shell
+Expression (Project names)
+  Sorting (Sorting for ORDER BY)
+    Expression ((Before ORDER BY + Projection))
+      Aggregating
+        Expression (Before GROUP BY)
+          Expression ((WHERE + Change column names to column identifiers))
+            ReadFromMergeTree (us.stock_quote)
+```
+
+**Characteristics:**
+
+- Single table scan
+- Aggregation finds max value for each column
+- `argMax(column, created_at)` returns the column value where `created_at` is maximum
+- Simplest query plan
+
+**Evaluation:**
+
+- ✔ Correct results
+- ✔ Most efficient
+- ✔ Best scalability
+- ⚠️ Requires explicitly listing all columns
+
+**Performance:**
+
+- Query duration: ~530ms (2.6x faster)
+- Rows read: 8,560,640 (50% fewer)
+- Memory usage: ~13.3MB (25% less)
+
+### Performance Summary
+
+| Approach  | Duration (ms) | Rows Read | Memory (MB) | Efficiency         |
+|-----------|---------------|-----------|-------------|--------------------|
+| JOIN      | ~1,400        | 17.1M     | 17.8        | ❌ Baseline        |
+| Tuple IN  | ~1,500        | 17.1M     | 17.6        | ≈ Similar          |
+| argMax    | **~530**      | **8.6M**  | **13.3**    | ✅ **2.6x faster** |
+
+### Recommendation
+
+**Use Approach 3 (GROUP BY with argMax)** for best performance:
+
+- 2.6x faster query execution
+- 50% fewer rows read
+- 25% less memory usage
+- Cleanest execution plan
+- Single table scan
+
+The only trade-off is verbosity—you must explicitly list all columns with `argMax()`. Consider creating a view or materialized view if this pattern is used frequently.
+
+---
+
+## Additional Tips
+
+### Table Engine Selection
+
+- **MergeTree**: General-purpose, most common choice
+- **ReplacingMergeTree**: Deduplication based on sorting key
+- **SummingMergeTree**: Automatic aggregation for numeric columns
+- **AggregatingMergeTree**: Pre-aggregated data storage
+- **CollapsingMergeTree**: Row-level updates with sign column
+
+### Partitioning Best Practices
+
+```sql
+CREATE TABLE events (
+    date Date,
+    user_id UInt32,
+    event String
+)
+ENGINE = MergeTree()
+PARTITION BY toYYYYMM(date)
+ORDER BY (user_id, date);
+```
+
+- Partition by time (month/day) for time-series data
+- Avoid over-partitioning (< 1000 partitions recommended)
+- Partition key should match common query filters
+
+### Index Optimization
+
+```sql
+-- Primary index (ORDER BY)
+ORDER BY (date, user_id, event_type)
+
+-- Skip index for filtering
+ALTER TABLE events ADD INDEX event_idx event TYPE set(100) GRANULARITY 4;
+
+-- Bloom filter for high cardinality
+ALTER TABLE events ADD INDEX user_bloom user_id TYPE bloom_filter() GRANULARITY 1;
+```
+
+### Memory Management
+
+```sql
+-- Limit memory per query
+SET max_memory_usage = 10000000000;
+
+-- Limit memory per user
+SET max_memory_usage_for_user = 100000000000;
+
+-- Enable query result caching
+SET use_query_cache = 1;
+```
+
+---
+
+## Resources
+
+- [ClickHouse Documentation](https://clickhouse.com/docs)
+- [Query Optimization Guide](https://clickhouse.com/docs/en/guides/improving-query-performance)
+- [System Tables Reference](https://clickhouse.com/docs/en/operations/system-tables)
