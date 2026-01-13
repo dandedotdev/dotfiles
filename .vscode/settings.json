@@ -151,7 +151,8 @@
     "**/layout.tsx": "${dirname} (layout)",
     "**/lib.*": "${dirname} (lib)",
     "**/mod.*": "${dirname} (mod)",
-    "**/page.tsx": "${dirname} (page)"
+    "**/page.tsx": "${dirname} (page)",
+    "**/route.ts": "${dirname} (route)"
   },
   "workbench.editor.empty.hint": "hidden",
   "workbench.editorAssociations": {
@@ -162,6 +163,15 @@
   "[css,json,yaml,yml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true
+  },
+  "[dockercompose]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": "advanced",
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
   },
   "[markdown]": {
     "editor.defaultFormatter": "DavidAnson.vscode-markdownlint",
@@ -178,14 +188,5 @@
   },
   "[typst]": {
     "editor.defaultFormatter": "myriad-dreamin.tinymist"
-  },
-  "[dockercompose]": {
-    "editor.insertSpaces": true,
-    "editor.tabSize": 2,
-    "editor.autoIndent": "advanced",
-    "editor.defaultFormatter": "redhat.vscode-yaml"
-  },
-  "[github-actions-workflow]": {
-    "editor.defaultFormatter": "redhat.vscode-yaml"
   }
 }
