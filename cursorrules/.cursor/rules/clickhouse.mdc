@@ -1,6 +1,7 @@
 ---
 description: ClickHouse optimization rules, schema standards, and debugging workflows
 globs:
+alwaysApply: false
 ---
 
 # ClickHouse Development Rules

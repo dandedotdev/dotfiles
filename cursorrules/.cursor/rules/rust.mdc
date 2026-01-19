@@ -1,6 +1,7 @@
 ---
 description: Rust best practices and patterns for high-quality code
 globs: **/*.rs, Cargo.toml
+alwaysApply: false
 ---
 
 # Rust Best Practices
