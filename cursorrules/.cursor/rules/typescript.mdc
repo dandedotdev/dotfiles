@@ -1,501 +1,167 @@
 ---
 description: Guidelines for writing TypeScript code
-alwaysApply: false
+globs: **/*.ts, **/*.tsx
 ---
 
-You are an expert Al programming assistant that primarily focuses on producing clear，readable React and TypeScript code.
+# TypeScript Best Practices
 
-You always use the Latest stable version of Typescript, Javascript, React, Node.js, Next.js App Router, Shadcn UI, TailwindCSS and you are familiar with the Latest features and best practices.
+Code must be strictly functional, declarative, and modular using React and TypeScript.
 
-You carefully provide accurate, factual, thoughtful answers, and are a genius at reasoning ai to chat, to generate
+- **Stack:** Latest TypeScript, React, Node.js, Next.js App Router, Shadcn UI, TailwindCSS.
+- **Restriction:** Avoid classes. Prioritize readability over performance unless specified.
 
-Code Style and Structure:
+## Strict Typing & Interfaces
 
-- Write concise, technical TypeScript code with accurate examples.
-- Use functional and declarative programming patterns; avoid classes.
-- Prefer iteration and modularization over code duplication.
-- Use descriptive variable names with auxiliary verbs （e.g.， isLoading, hasError）.
-- Structure files: exported component, helpers, static content，types.
+- **Inheritance:** ALWAYS prefer `interface` over `type`. Avoid `&` (intersection) for performance.
 
-Naming Conventions:
+  ```ts
+  // BAD
+  type C = A & B;
+  // GOOD
+  interface C extends A, B {}
+  ```
 
-- Use Lowercase with dashes for directories （e.g.. components/auth-wizard）.
-- Favor named exports for components.
+- **Readonly**: Use `readonly` by default to prevent mutation.
 
-TypeScript Usage
+  ```ts
+  // BAD
+  type User = { id: string; };
+  // GOOD
+  type User = { readonly id: string; };
+  ```
 
-- Use TypeScript for all code; prefer interfaces over types.
-  • Use functional components with TypeScript interfaces.
+- **NoUncheckedIndexedAccess**: Assume array/object access can return `undefined`.
 
-UI and Styling:
+## Imports & Exports
 
-- Use Shadcn UI, and Tailwind for components and styling.
-- Implement responsive design with Tailwind CSS; use a mobile-first approach.
+- **Named Exports**: ALWAYS use named exports. Avoid default exports unless required by framework (e.g., Next.js pages).
 
-Performance Optimization:
+  ```ts
+  // BAD
+  export default function MyComponent() {}
+  // GOOD
+  export function MyComponent() {}
+  ```
 
-- Minimize 'use client'，'useEffect'，and 'setstate'i favor React Server Components（RSC）.
-- Wrap client components in Suspense with fallback.
-- Use dynamic Loading for non-critical components.
+- **Type Imports**: Use top-level `import type`.
 
-Other Rules Need To Follow:
+  ```ts
+  // BAD
+  import { type User } from "./user";
+  // GOOD
+  import type { User } from "./user";
+  ```
 
-- Follow the user's requirements carefully & to the Letter.
-- First think step-by-step - describe your plan for what to build in pseudocode, written out in great detail.
-- Confirm, then write code！
-- Always write correct, up to date, bug free, fully functional and working, secure，performant and efficient code.
-- Focus on readability over being performant.
-- Fully implement all requested functionality.
-- Leave No todo's, placeholders or missing pieces.
-- Be sure to reference file names.
-- Be concise, Minimize any other prose.
-- If you think there might not be a correct answer, you say so. If you do not know the answer, say so instead of guessing.
+## Enums
 
-Don't be lazy, write all the code to implement the features I ask for.
-
-Please always answer in English.
-
-Guidelines For Writing TypeScript Code With Examples:
-
-1. Any inside generics functions
-
-When building generic functions, you may need to use any inside the function body.
-
-This is because TypeScript often cannot match your runtime logic to the logic done inside your types.
-
-One example:
-
-```ts
-const youSayGoodbyeISayHello = <
-  TInput extends "hello" | "goodbye",
->(
-  input: TInput,
-): TInput extends "hello" ? "goodbye" : "hello" => {
-  if (input === "goodbye") {
-    return "hello"; // Error!
-  } else {
-    return "goodbye"; // Error!
-  }
-};
-```
-
-On the type level (and the runtime), this function returns `goodbye` when the input is `hello`.
-
-There is no way to make this work concisely in TypeScript.
-
-So using `any` is the most concise solution:
-
-```ts
-const youSayGoodbyeISayHello = <
-  TInput extends "hello" | "goodbye",
->(
-  input: TInput,
-): TInput extends "hello" ? "goodbye" : "hello" => {
-  if (input === "goodbye") {
-    return "hello" as any;
-  } else {
-    return "goodbye" as any;
-  }
-};
-```
-
-Outside of generic functions, use `any` extremely sparingly.
-
-2. Default Exports
-
-Unless explicitly required by the framework, do not use default exports.
+- **No Enums**: Do not introduce new enums. Use `as const` objects.
+- **Reasoning**: Numeric enums have reverse mapping issues.
 
 ```ts
 // BAD
-export default function myFunction() {
-  return <div>Hello</div>;
-}
+enum Direction { Up, Down }
+
+// GOOD
+const Direction = {
+  Up: "UP",
+  Down: "DOWN",
+} as const;
+
+type Direction = (typeof Direction)[keyof typeof Direction];
 ```
+
+## Generics & Any
+
+- **Generics**: Prefix type parameters with T (e.g., TKey).
+- **Any Usage**: Allow any only inside generic function bodies for necessary casting (e.g., matching runtime logic to conditional types).
 
 ```ts
-// GOOD
-export function myFunction() {
-  return <div>Hello</div>;
+// Allowed exception for casting inside generic function
+const func = <T>(input: T): T => {
+  return input as any; // distinct from logic
 }
 ```
 
-Default exports create confusion from the importing file.
+## Discriminated Unions
+
+- Model Data: Use discriminated unions to prevent "bag of optionals".
+- Switch: Use `switch` statements to handle states.
 
 ```ts
 // BAD
-import myFunction from "./myFunction";
-```
+type State<T> = { status: string; data?: T; error?: Error };
 
-```ts
 // GOOD
-import { myFunction } from "./myFunction";
-```
-
-There are certain situations where a framework may require a default export. For instance, Next.js requires a default export for pages.
-
-```tsx
-// This is fine, if required by the framework
-export default function MyPage() {
-  return <div>Hello</div>;
-}
-```
-
-3. Discriminated Unions
-
-Proactively use discriminated unions to model data that can be in one of a few different shapes.
-
-For example, when sending events between environments:
-
-```ts
-type UserCreatedEvent = {
-  type: "user.created";
-  data: { id: string; email: string };
-};
-
-type UserDeletedEvent = {
-  type: "user.deleted";
-  data: { id: string };
-};
-
-type Event = UserCreatedEvent | UserDeletedEvent;
-```
-
-Use switch statements to handle the results of discriminated unions:
-
-```ts
-const handleEvent = (event: Event) => {
-  switch (event.type) {
-    case "user.created":
-      console.log(event.data.email);
-      break;
-    case "user.deleted":
-      console.log(event.data.id);
-      break;
-  }
-};
-```
-
-Use discriminated unions to prevent the 'bag of optionals' problem.
-
-For example, when describing a fetching state:
-
-```ts
-// BAD - allows impossible states
-type FetchingState<TData> = {
-  status: "idle" | "loading" | "success" | "error";
-  data?: TData;
-  error?: Error;
-};
-
-// GOOD - prevents impossible states
-type FetchingState<TData> =
-  | { status: "idle" }
+type State<T> =
   | { status: "loading" }
-  | { status: "success"; data: TData }
+  | { status: "success"; data: T }
   | { status: "error"; error: Error };
 ```
 
-4. Enums
+## Optionals
 
-Do not introduce new enums into the codebase. Retain existing enums.
-
-If you require enum-like behaviour, use an `as const` object:
-
-```ts
-const backendToFrontendEnum = {
-  xs: "EXTRA_SMALL",
-  sm: "SMALL",
-  md: "MEDIUM",
-} as const;
-
-type LowerCaseEnum = keyof typeof backendToFrontendEnum; // "xs" | "sm" | "md"
-
-type UpperCaseEnum =
-  (typeof backendToFrontendEnum)[LowerCaseEnum]; // "EXTRA_SMALL" | "SMALL" | "MEDIUM"
-```
-
-Remember that numeric enums behave differently to string enums. Numeric enums produce a reverse mapping:
+- **Sparingly**: Use optional properties (`?`) extremely sparingly.
+- **Explicit Unions**: Prefer `string | undefined` to force explicit handling.
 
 ```ts
-enum Direction {
-  Up,
-  Down,
-  Left,
-  Right,
-}
+// BAD - allows accidental omission
+type Props = { userId?: string };
 
-const direction = Direction.Up; // 0
-const directionName = Direction[0]; // "Up"
+// GOOD - forces caller to pass undefined explicitly
+type Props = { userId: string | undefined };
 ```
 
-This means that the enum `Direction` above will have eight keys instead of four.
+## Error Handling
 
-```ts
-enum Direction {
-  Up,
-  Down,
-  Left,
-  Right,
-}
+- **Result Pattern**: Prefer returning a Result type over throwing errors for logic flow.
 
-Object.keys(Direction).length; // 8
-```
+  ```ts
+  type Result<T, E extends Error> = { ok: true; value: T } | { ok: false; error: E };
 
-5. Import Type
+  // Usage
+  const parseJson = (
+    input: string,
+  ): Result<unknown, Error> => {
+    try {
+      return { ok: true, value: JSON.parse(input) };
+    } catch (error) {
+      return { ok: false, error: error as Error };
+    }
+  };
+  ```
 
-Use import type whenever you are importing a type.
+- **Throwing**: Only throw if triggering a global handler (e.g., framework boundary).
 
-Prefer top-level `import type` over inline `import { type ... }`.
+## React & Next.js
 
-```ts
-// BAD
-import { type User } from "./user";
-```
+- **Components**: Functional components only. No return type needed for components returning JSX.
 
-```ts
-// GOOD
-import type { User } from "./user";
-```
+  ```ts
+  // No return type needed
+  const MyComponent = () => <div>Hello</div>;
+  ```
 
-The reason for this is that in certain environments, the first version's import will not be erased. So you'll be left with:
+- **Rendering**: Favor RSC. Minimize `use client`. Wrap client components in Suspense.
+- **Styling**: Shadcn UI + Tailwind CSS.
 
-```ts
-// Before transpilation
-import { type User } from "./user";
+## Naming Conventions
 
-// After transpilation
-import "./user";
-```
-
-6. Installing Libraries
-
-When installing libraries, do not rely on your own training data.
-
-Your training data has a cut-off date. You're probably not aware of all of the latest developments in the JavaScript and TypeScript world.
-
-This means that instead of picking a version manually (via updating the `package.json` file), you should use a script to install the latest version of a library.
-
-```bash
-# pnpm
-pnpm add -D @typescript-eslint/eslint-plugin
-
-# yarn
-yarn add -D @typescript-eslint/eslint-plugin
-
-# npm
-npm install --save-dev @typescript-eslint/eslint-plugin
-```
-
-This will ensure you're always using the latest version.
-
-7. Interface Extends
-
-ALWAYS prefer interfaces when modelling inheritance.
-
-The `&` operator has terrible performance in TypeScript. Only use it where `interface extends` is not possible.
-
-```ts
-// BAD
-
-type A = {
-  a: string;
-};
-
-type B = {
-  b: string;
-};
-
-type C = A & B;
-```
-
-```ts
-// GOOD
-
-interface A {
-  a: string;
-}
-
-interface B {
-  b: string;
-}
-
-interface C extends A, B {
-  // Additional properties can be added here
-}
-```
-
-8. JSDoc Comments
-
-Use JSDoc comments to annotate functions and types.
-
-Be concise in JSDoc comments, and only provide JSDoc comments if the function's behaviour is not self-evident.
-
-Use the JSDoc inline `@link` tag to link to other functions and types within the same file.
-
-```ts
-/**
- * Subtracts two numbers
- */
-const subtract = (a: number, b: number) => a - b;
-
-/**
- * Does the opposite to {@link subtract}
- */
-const add = (a: number, b: number) => a + b;
-```
-
-9. Naming Conventions
-
-- Use kebab-case for file names (e.g., `my-component.ts`)
-- Use camelCase for variables and function names (e.g., `myVariable`, `myFunction()`)
-- Use UpperCamelCase (PascalCase) for classes, types, and interfaces (e.g., `MyClass`, `MyInterface`)
-- Use ALL_CAPS for constants and enum values (e.g., `MAX_COUNT`, `Color.RED`)
-- Inside generic types, functions or classes, prefix type parameters with `T` (e.g., `TKey`, `TValue`)
+- **Files**: `kebab-case` (`my-component.ts`)
+- **Variables/Functions**: `camelCase` (`isLoading`, `fetchUser`)
+- **Types**: `PascalCase` (`UserProfile`)
+- **Constants**: `UPPER_CASE` (`MAX_RETRIES`)
+- **Generics**: `T` prefix (`TValue`)
 
 ```ts
 type RecordOfArrays<TItem> = Record<string, TItem[]>;
 ```
 
-10. No Unchecked Index Access
+## Documentation
 
-If the user has this rule enabled in their `tsconfig.json`, indexing into objects and arrays will behave differently from how you expect.
+- JSDoc: Use for non-obvious logic.
+- Links: Use `{@link}` for references.
 
-```ts
-const obj: Record<string, string> = {};
+## Development Workflow
 
-// With noUncheckedIndexedAccess, value will
-// be `string | undefined`
-// Without it, value will be `string`
-const value = obj.key;
-```
-
-```ts
-const arr: string[] = [];
-
-// With noUncheckedIndexedAccess, value will
-// be `string | undefined`
-// Without it, value will be `string`
-const value = arr[0];
-```
-
-11. Optional Properties
-
-Use optional properties extremely sparingly. Only use them when the property is truly optional, and consider whether bugs may be caused by a failure to pass the property.
-
-In the example below we always want to pass user ID to `AuthOptions`. This is because if we forget to pass it somewhere in the code base, it will cause our function to be not authenticated.
-
-```ts
-// BAD
-type AuthOptions = {
-  userId?: string;
-};
-
-const func = (options: AuthOptions) => {
-  const userId = options.userId;
-};
-```
-
-```ts
-// GOOD
-type AuthOptions = {
-  userId: string | undefined;
-};
-
-const func = (options: AuthOptions) => {
-  const userId = options.userId;
-};
-```
-
-12. Readonly Properties
-
-Use `readonly` properties for object types by default. This will prevent accidental mutation at runtime.
-
-Omit `readonly` only when the property is genuinely mutable.
-
-```ts
-// BAD
-type User = {
-  id: string;
-};
-
-const user: User = {
-  id: "1",
-};
-
-user.id = "2";
-```
-
-```ts
-// GOOD
-type User = {
-  readonly id: string;
-};
-
-const user: User = {
-  id: "1",
-};
-
-user.id = "2"; // Error
-```
-
-13. Return Types
-
-When declaring functions on the top-level of a module,
-declare their return types. This will help future AI
-assistants understand the function's purpose.
-
-```ts
-const myFunc = (): string => {
-  return "hello";
-};
-```
-
-One exception to this is components which return JSX.
-No need to declare the return type of a component,
-as it is always JSX.
-
-```tsx
-const MyComponent = () => {
-  return <div>Hello</div>;
-};
-```
-
-14. Throwing
-
-Think carefully before implementing code that throws errors.
-
-If a thrown error produces a desirable outcome in the system, go for it. For instance, throwing a custom error inside a backend framework's request handler.
-
-However, for code that you would need a manual try catch for, consider using a result type instead:
-
-```ts
-type Result<T, E extends Error> =
-  | { ok: true; value: T }
-  | { ok: false; error: E };
-```
-
-For example, when parsing JSON:
-
-```ts
-const parseJson = (
-  input: string,
-): Result<unknown, Error> => {
-  try {
-    return { ok: true, value: JSON.parse(input) };
-  } catch (error) {
-    return { ok: false, error: error as Error };
-  }
-};
-```
-
-This way you can handle the error in the caller:
-
-```ts
-const result = parseJson('{"name": "John"}');
-
-if (result.ok) {
-  console.log(result.value);
-} else {
-  console.error(result.error);
-}
-```
+- Completeness: No placeholders/TODOs.
+- Dependencies: Use CLI (`pnpm add ...`), do not edit `package.json` manually.

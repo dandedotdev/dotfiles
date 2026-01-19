@@ -1,63 +1,72 @@
 ---
-description: Guidelines for writing Rust code
-alwaysApply: false
+description: Rust best practices and patterns for high-quality code
+globs: **/*.rs, Cargo.toml
 ---
 
-You are an expert AI programming assistant that primarily focuses on producing clear, readable Rust code.
+# Rust Best Practices
 
-You always use the latest stable version of Rust and are familiar with the latest features, crates, and best practices from crates.io and the Rust ecosystem.
+## Code Style and Structure
 
-Code Style and Structure:
-
-- Write idiomatic, safe Rust code with accurate examples
+- Write idiomatic and safe Rust code
 - Embrace ownership, borrowing, and lifetime patterns
 - Prefer trait implementations over inheritance
-- Use descriptive variable names following Rust conventions (snake_case)
-- Structure files: public modules, private helpers, constants, types
+- Use descriptive variable names (snake_case)
+- Structure files with public modules and private helpers
 - Follow the Rust API Guidelines
 
-Naming Conventions:
+## Naming Conventions
 
 - Use snake_case for functions, variables, and modules
 - Use PascalCase for types, traits, and enums
 - Follow standard Rust module hierarchy patterns
+- Use proper const naming conventions (SCREAMING_SNAKE_CASE)
 
-Type System Usage:
+## Type System
 
-- Leverage Rust's type system for compile-time guarantees
+- Leverage type system for compile-time guarantees
 - Use generics and trait bounds effectively
 - Implement custom traits when appropriate
-- Utilize Result and Option types for error handling
+- Use Result and Option for flow control
+- Derive common traits (Debug, Clone, Eq) where possible
 
-Memory and Performance:
+## Memory and Performance
 
-- Write memory-safe code using Rust's ownership system
 - Minimize heap allocations where possible
 - Use references and borrowing appropriately
-- Implement Zero-Cost abstractions
-- Consider async/await for I/O-bound operations
+- Implement zero-cost abstractions
+- Use async/await for I/O-bound operations
+- Avoid unnecessary cloning
+- Use proper capacity hints for collections
 
-Error Handling:
+## Error Handling
 
 - Use Result for fallible operations
-- Implement custom error types when needed
-- Provide meaningful error messages
-- Use the ? operator appropriately
+- Implement custom error types using `thiserror` or `anyhow`
+- Provide meaningful context and error messages
+- Use the `?` operator appropriately
+- Handle all error cases explicitly
 
-Other Rules to follow:
+## Testing
 
-- Follow the user's requirements carefully & to the letter
-- First think step-by-step - describe your plan in pseudocode
-- Confirm, then write code
-- Always write correct, up to date, bug-free, memory-safe, and efficient code
-- Focus on both safety and performance
+- Write proper unit tests in same file
+- Implement proper integration tests in `tests/`
+- Use proper assertion macros
+- Test failure cases and edge cases
+- Implement proper mocking where necessary
+
+## Implementation Workflow
+
+- Think step-by-step before writing code
+- Confirm logic in pseudocode if complex
 - Fully implement all requested functionality
 - Leave no TODOs or unimplemented traits
-- Be sure to reference module paths
-- Be concise, minimize any other prose
-- If you think there might not be a correct answer, say so
-- If you do not know the answer, say so instead of guessing
+- Reference module paths explicitly
+- Prioritize both safety and efficiency
 
-Don't be lazy, write all the code to implement the features I ask for.
+## Tooling and Environment
 
-Please always answer in English.
+- Use latest stable Rust version
+- Follow Cargo conventions
+- Use clippy for linting
+- Format code using rustfmt
+- Manage dependencies effectively
