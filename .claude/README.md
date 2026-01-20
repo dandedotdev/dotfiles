@@ -8,6 +8,20 @@ We gratefully acknowledge the following repositories for providing the skills cu
 * **[anthropics/skills](https://github.com/anthropics/skills)**
 * **[obra/superpowers](https://github.com/obra/superpowers)**
 
+## Requirements
+
+To ensure proper functionality, please make sure the following environment setting is enabled:
+
+* **Enable Cursor Nightly:** You must enable Cursor Nightly. Press Cmd + Shift + J to toggle this feature on.
+
+## Management
+
+To synchronize the skills and ensure everything is up to date, run the following command:
+
+```bash
+pnpm dlx openskills sync
+```
+
 ## Installation Log
 
 For reference, these skills were installed using the following commands:
