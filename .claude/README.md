@@ -2,11 +2,14 @@
 
 The agent skills configured in this directory were installed and managed using **[OpenSkills](https://github.com/numman-ali/openskills)**.
 
+> Alternative: **[vercel-labs/add-skill](https://github.com/vercel-labs/add-skill)**
+
 We gratefully acknowledge the following repositories for providing the skills currently available in this project:
 
 * **[vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills)**
 * **[anthropics/skills](https://github.com/anthropics/skills)**
 * **[obra/superpowers](https://github.com/obra/superpowers)**
+* **[nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)**
 
 Here are some awesome Claude Code Configuration:
 
