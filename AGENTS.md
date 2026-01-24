@@ -229,8 +229,20 @@ Usage notes:
 </skill>
 
 <skill>
+<name>clickhouse-cdc</name>
+<description>Use when syncing data FROM relational databases (PostgreSQL, MySQL, MongoDB) TO ClickHouse. Covers change data capture using Debezium, Airbyte, or custom triggers. Includes handling schema evolution, DELETE operations, and maintaining consistency. NOT for message queues (see clickhouse-streaming) or query optimization (see clickhouse-patterns).</description>
+<location>project</location>
+</skill>
+
+<skill>
 <name>clickhouse-patterns</name>
 <description>Use when designing ClickHouse tables, debugging slow analytical queries (execution time > 1 second), seeing "too many partitions" errors, or choosing between MergeTree engine variants. Symptoms include full table scans, inefficient aggregations, or confusion about partitioning strategies.</description>
+<location>project</location>
+</skill>
+
+<skill>
+<name>clickhouse-streaming</name>
+<description>Use when ingesting continuous data streams from Kafka, RabbitMQ, or Kinesis into ClickHouse. Covers backpressure handling, exactly-once semantics, stream processing patterns, and performance optimization. NOT for database replication (see clickhouse-cdc) or batch ETL (see clickhouse-patterns).</description>
 <location>project</location>
 </skill>
 
