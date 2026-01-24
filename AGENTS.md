@@ -9,14 +9,12 @@
 When users ask you to perform tasks, check if any of the available skills below can help complete the task more effectively. Skills provide specialized capabilities and domain knowledge.
 
 How to use skills:
-
 - Invoke: `npx openskills read <skill-name>` (run in your shell)
   - For multiple: `npx openskills read skill-one,skill-two`
 - The skill content will load with detailed instructions on how to complete the task
 - Base directory provided in output for resolving bundled resources (references/, scripts/, assets/)
 
 Usage notes:
-
 - Only use skills listed in <available_skills> below
 - Do not invoke a skill that is already loaded in your context
 - Each skill invocation is stateless
@@ -45,6 +43,24 @@ Usage notes:
 <skill>
 <name>canvas-design</name>
 <description>Create beautiful visual art in .png and .pdf documents using design philosophy. You should use this skill when the user asks to create a poster, piece of art, design, or other static piece. Create original visual designs, never copying existing artists' work to avoid copyright violations.</description>
+<location>project</location>
+</skill>
+
+<skill>
+<name>clickhouse-cdc</name>
+<description>Use when syncing data FROM relational databases (PostgreSQL, MySQL, MongoDB) TO ClickHouse. Covers change data capture using Debezium, Airbyte, or custom triggers. Includes handling schema evolution, DELETE operations, and maintaining consistency. NOT for message queues (see clickhouse-streaming) or query optimization (see clickhouse-patterns).</description>
+<location>project</location>
+</skill>
+
+<skill>
+<name>clickhouse-patterns</name>
+<description>Use when designing ClickHouse table schemas, choosing MergeTree engines, optimizing slow queries (execution time > 1 second), or implementing batch INSERT patterns. Does NOT cover real-time streaming from message queues or database replication/CDC - see related skills for those topics.</description>
+<location>project</location>
+</skill>
+
+<skill>
+<name>clickhouse-streaming</name>
+<description>Use when ingesting continuous data streams from Kafka, RabbitMQ, or Kinesis into ClickHouse. Covers backpressure handling, exactly-once semantics, stream processing patterns, and performance optimization. NOT for database replication (see clickhouse-cdc) or batch ETL (see clickhouse-patterns).</description>
 <location>project</location>
 </skill>
 
@@ -225,24 +241,6 @@ Usage notes:
 <skill>
 <name>xlsx</name>
 <description>"Comprehensive spreadsheet creation, editing, and analysis with support for formulas, formatting, data analysis, and visualization. When Claude needs to work with spreadsheets (.xlsx, .xlsm, .csv, .tsv, etc) for: (1) Creating new spreadsheets with formulas and formatting, (2) Reading or analyzing data, (3) Modify existing spreadsheets while preserving formulas, (4) Data analysis and visualization in spreadsheets, or (5) Recalculating formulas"</description>
-<location>project</location>
-</skill>
-
-<skill>
-<name>clickhouse-cdc</name>
-<description>Use when syncing data FROM relational databases (PostgreSQL, MySQL, MongoDB) TO ClickHouse. Covers change data capture using Debezium, Airbyte, or custom triggers. Includes handling schema evolution, DELETE operations, and maintaining consistency. NOT for message queues (see clickhouse-streaming) or query optimization (see clickhouse-patterns).</description>
-<location>project</location>
-</skill>
-
-<skill>
-<name>clickhouse-patterns</name>
-<description>Use when designing ClickHouse tables, debugging slow analytical queries (execution time > 1 second), seeing "too many partitions" errors, or choosing between MergeTree engine variants. Symptoms include full table scans, inefficient aggregations, or confusion about partitioning strategies.</description>
-<location>project</location>
-</skill>
-
-<skill>
-<name>clickhouse-streaming</name>
-<description>Use when ingesting continuous data streams from Kafka, RabbitMQ, or Kinesis into ClickHouse. Covers backpressure handling, exactly-once semantics, stream processing patterns, and performance optimization. NOT for database replication (see clickhouse-cdc) or batch ETL (see clickhouse-patterns).</description>
 <location>project</location>
 </skill>
 
