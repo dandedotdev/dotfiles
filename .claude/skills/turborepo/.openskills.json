@@ -1,0 +1,7 @@
+{
+  "source": "vercel/turborepo",
+  "sourceType": "git",
+  "repoUrl": "https://github.com/vercel/turborepo",
+  "subpath": "skills/turborepo",
+  "installedAt": "2026-01-26T01:35:56.461Z"
+}

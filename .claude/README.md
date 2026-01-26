@@ -9,6 +9,7 @@ We gratefully acknowledge the following repositories for providing the skills cu
 * **[vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills)**
 * **[anthropics/skills](https://github.com/anthropics/skills)**
 * **[obra/superpowers](https://github.com/obra/superpowers)**
+* **[vercel/turborepo](https://github.com/vercel/turborepo)**
 * **[nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)**
 
 Here are some awesome Claude Code Configuration:
