@@ -47,8 +47,9 @@ For project-specific logic, it is recommended to organize them within the `.curs
 Some of these cursor rules and structures are inspired by:
 
 - [Cursor Rules for Better AI Development by Matt Pocock](https://www.totaltypescript.com/cursor-rules-for-better-ai-development)
-- [Cursor Commands by hamzafer](https://github.com/hamzafer/cursor-commands)
-- [Awesome CursorRules by PatrickJS](https://github.com/PatrickJS/awesome-cursorrules)
+- [hamzafer/cursor-commands](https://github.com/hamzafer/cursor-commands)
+- [PatrickJS/awesome-cursorrules](https://github.com/PatrickJS/awesome-cursorrules)
+- [twostraws/SwiftAgents](https://github.com/twostraws/SwiftAgents)
 
 ## Worktrees
 

@@ -1,0 +1,85 @@
+---
+description: Best practices for Swift, SwiftUI, and SwiftData development targeting iOS 26.0+
+globs: **/*.swift
+alwaysApply: false
+---
+
+# Swift and SwiftUI Best Practices
+
+## General Guidelines
+
+- Target **iOS 26.0** or later.
+- Use **Swift 6.2** or later with modern Swift concurrency.
+- Ensure all code adheres to Apple's Human Interface Guidelines and App Review guidelines.
+- Do not introduce third-party frameworks without explicit permission.
+- Avoid UIKit components unless specifically requested.
+
+## Project Structure
+
+- Organize folders by app features (feature-based architecture).
+- Separate different types into individual Swift files (one struct/class/enum per file).
+- Follow strict naming conventions for types, properties, methods, and models.
+- Implement unit tests for core application logic; only use UI tests if unit tests are insufficient.
+- Include code comments and documentation where necessary.
+- **Security:** Never include API keys or secrets in the repository.
+
+## Swift Coding Standards
+
+- **Concurrency:**
+  - Assume strict Swift concurrency rules.
+  - Never use legacy GCD (e.g., `DispatchQueue.main.async`). Use modern Swift concurrency (`Task`, `actor`, etc.).
+  - Always mark `@Observable` classes with `@MainActor`.
+  - Use `Task.sleep(for:)` instead of `Task.sleep(nanoseconds:)`.
+- **Syntax & API:**
+  - Prefer Swift-native alternatives over Foundation methods (e.g., use `replacing("a", with: "b")` instead of `replacingOccurrences`).
+  - Use modern Foundation APIs (e.g., `URL.documentsDirectory`, `appending(path:)`).
+  - Use Swift 6 formatting styles (e.g., `Text(value, format: .number.precision(.fractionLength(2)))`) instead of C-style formatting strings.
+  - Prefer static member lookup (e.g., `.circle`, `.borderedProminent`) over explicit formatting instances.
+  - Use `localizedStandardContains()` for user-input filtering.
+- **Safety:**
+  - Avoid force unwraps (`!`) and `try!` unless the error is unrecoverable.
+
+## SwiftUI Components & UI
+
+- **State Management:**
+  - Use `@Observable` macros for shared data classes.
+  - **Never** use `ObservableObject`.
+  - Avoid `StateObject` or `ObservedObject` in favor of modern patterns.
+  - Place view logic into ViewModels or separate state containers to facilitate testing.
+- **Layout & Rendering:**
+  - Use `foregroundStyle()` instead of `foregroundColor()`.
+  - Use `clipShape(.rect(cornerRadius:))` instead of `cornerRadius()`.
+  - Use the `Tab` API instead of the deprecated `tabItem()`.
+  - Avoid `UIScreen.main.bounds`. Use `GeometryReader` alternatives like `containerRelativeFrame()` or `visualEffect()` where possible.
+  - Prefer `ImageRenderer` over `UIGraphicsImageRenderer`.
+  - Do not hide scroll indicators via `init`; use `.scrollIndicators(.hidden)`.
+- **Navigation:**
+  - Always use `NavigationStack` instead of `NavigationView`.
+  - Use `.navigationDestination(for:)` for routing.
+- **Interactions:**
+  - Use `Button` for all tap interactions. Only use `.onTapGesture` if tap location or tap count is strictly required.
+  - Ensure Button labels with images use the format: `Button("Label", systemImage: "icon", action: action)`.
+- **Performance & Structure:**
+  - Break complex views into separate `View` structs, not computed properties.
+  - Optimize `ForEach` with enumerated sequences: `ForEach(x.enumerated(), id: \.element.id)` (do not convert to Array).
+  - Avoid `AnyView` unless absolutely necessary.
+  - Use `onChange` with either 0 or 2 parameters (avoid the 1-parameter deprecated variant).
+- **Styling:**
+  - Support Dynamic Type; do not force specific font sizes.
+  - Use `bold()` modifier instead of `fontWeight(.bold)`.
+  - Avoid hard-coded padding/spacing values unless strictly specified.
+  - Avoid using `UIColor` (UIKit colors) in SwiftUI views.
+
+## SwiftData
+
+- **General:**
+  - Define models using the `@Model` macro.
+- **CloudKit Sync Requirements:**
+  - **Never** use `@Attribute(.unique)`.
+  - All model properties must have default values or be Optional.
+  - All relationships must be Optional.
+
+## Quality Assurance
+
+- Ensure code is free of SwiftLint warnings/errors before finalizing.
+- Verify code compiles strictly under Swift 6.2 concurrency settings.
