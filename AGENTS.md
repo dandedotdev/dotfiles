@@ -131,6 +131,12 @@ Usage notes:
 </skill>
 
 <skill>
+<name>security-review</name>
+<description>Use this skill when adding authentication, handling user input, working with secrets, creating API endpoints, or implementing payment/sensitive features. Provides comprehensive security checklist and patterns.</description>
+<location>project</location>
+</skill>
+
+<skill>
 <name>skill-creator</name>
 <description>Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Claude's capabilities with specialized knowledge, workflows, or tool integrations.</description>
 <location>project</location>
@@ -217,6 +223,12 @@ Usage notes:
 <skill>
 <name>xlsx</name>
 <description>"Comprehensive spreadsheet creation, editing, and analysis with support for formulas, formatting, data analysis, and visualization. When Claude needs to work with spreadsheets (.xlsx, .xlsm, .csv, .tsv, etc) for: (1) Creating new spreadsheets with formulas and formatting, (2) Reading or analyzing data, (3) Modify existing spreadsheets while preserving formulas, (4) Data analysis and visualization in spreadsheets, or (5) Recalculating formulas"</description>
+<location>project</location>
+</skill>
+
+<skill>
+<name>zustand</name>
+<description>Zustand state management guide. Use when working with store code (src/store/**), implementing actions, managing state, or creating slices. Triggers on Zustand store development, state management questions, or action implementation.</description>
 <location>project</location>
 </skill>
 
