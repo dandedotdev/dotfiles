@@ -1,0 +1,7 @@
+{
+  "source": "lobehub/lobe-chat",
+  "sourceType": "git",
+  "repoUrl": "https://github.com/lobehub/lobe-chat",
+  "subpath": ".agents/skills/zustand",
+  "installedAt": "2026-01-26T08:16:56.484Z"
+}

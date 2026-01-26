@@ -10,6 +10,7 @@ I gratefully acknowledge the following repositories for providing the skills cur
 * **[Dimillian/Skills](https://github.com/Dimillian/Skills)**
 * **[nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)**
 * **[obra/superpowers](https://github.com/obra/superpowers)**
+* **[spences10/svelte-claude-skills](https://github.com/spences10/svelte-claude-skills)**
 * **[vercel/turborepo](https://github.com/vercel/turborepo)**
 * **[vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills)**
 
