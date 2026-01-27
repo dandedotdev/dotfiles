@@ -132,7 +132,7 @@ Usage notes:
 
 <skill>
 <name>security-review</name>
-<description>Use this skill when adding authentication, handling user input, working with secrets, creating API endpoints, or implementing payment/sensitive features. Provides comprehensive security checklist and patterns.</description>
+<description>Use this skill when adding authentication, handling user input, working with secrets, creating API endpoints, or handling sensitive data. tailored for Next.js + Rust + ClickHouse stack.</description>
 <location>project</location>
 </skill>
 
