@@ -26,25 +26,25 @@ You are an expert security specialist focused on identifying and remediating vul
 - **eslint-plugin-security** - Static analysis for security issues
 - **git-secrets** - Prevent committing secrets
 - **trufflehog** - Find secrets in git history
-- **semgrep** - Pattern-based security scanning
+- **opengrep** - Pattern-based security scanning
 
 ### Analysis Commands
 
 ```bash
 # Check for vulnerable dependencies
-pnpm audit
+npm audit
 
 # High severity only
-pnpm audit --audit-level=high
+npm audit --audit-level=high
 
 # Check for secrets in files
 grep -r "api[_-]?key\|password\|secret\|token" --include="*.js" --include="*.ts" --include="*.json" .
 
 # Check for common security issues
-pnpm dlx eslint . --plugin security
+npx eslint . --plugin security
 
 # Scan for hardcoded secrets
-pnpm dlx trufflehog filesystem . --json
+npx trufflehog filesystem . --json
 
 # Check git history for secrets
 git log -p | grep -i "password\|api_key\|secret"
@@ -129,42 +129,23 @@ For each category, check:
 
 ### 3. Example Project-Specific Security Checks
 
-**CRITICAL - Platform Handles Real Money:**
+**CONTEXT - Investment Data & Insights Platform (No Asset Custody):**
 
 ```
-Financial Security:
-- [ ] All market trades are atomic transactions
-- [ ] Balance checks before any withdrawal/trade
-- [ ] Rate limiting on all financial endpoints
-- [ ] Audit logging for all money movements
-- [ ] Double-entry bookkeeping validation
-- [ ] Transaction signatures verified
-- [ ] No floating-point arithmetic for money
-
-Solana/Blockchain Security:
-- [ ] Wallet signatures properly validated
-- [ ] Transaction instructions verified before sending
-- [ ] Private keys never logged or stored
-- [ ] RPC endpoints rate limited
-- [ ] Slippage protection on all trades
-- [ ] MEV protection considerations
-- [ ] Malicious instruction detection
-
 Authentication Security:
-- [ ] Privy authentication properly implemented
-- [ ] JWT tokens validated on every request
-- [ ] Session management secure
+- [ ] Strong password policies enforced (if using email/pass)
+- [ ] OAuth state parameter validation (if using Google/GitHub login)
 - [ ] No authentication bypass paths
-- [ ] Wallet signature verification
 - [ ] Rate limiting on auth endpoints
+- [ ] MFA available for user accounts (recommended for trust)
 
-Database Security (Supabase):
-- [ ] Row Level Security (RLS) enabled on all tables
-- [ ] No direct database access from client
-- [ ] Parameterized queries only
-- [ ] No PII in logs
-- [ ] Backup encryption enabled
-- [ ] Database credentials rotated regularly
+Database Security (General SQL/NoSQL):
+- [ ] Database not exposed to public internet (private subnet/VPC)
+- [ ] Application user has 'Least Privilege' (cannot DROP tables)
+- [ ] Connection strings used server-side only (never in client bundles)
+- [ ] Data at rest encryption enabled
+- [ ] Parameterized queries for all search/filter inputs
+- [ ] Regular automated backups
 
 API Security:
 - [ ] All endpoints require authentication (except public)
@@ -173,14 +154,6 @@ API Security:
 - [ ] CORS properly configured
 - [ ] No sensitive data in URLs
 - [ ] Proper HTTP methods (GET safe, POST/PUT/DELETE idempotent)
-
-Search Security (Redis + OpenAI):
-- [ ] Redis connection uses TLS
-- [ ] OpenAI API key server-side only
-- [ ] Search queries sanitized
-- [ ] No PII sent to OpenAI
-- [ ] Rate limiting on search endpoints
-- [ ] Redis AUTH enabled
 ```
 
 ## Vulnerability Patterns to Detect
@@ -190,13 +163,13 @@ Search Security (Redis + OpenAI):
 ```javascript
 // ❌ CRITICAL: Hardcoded secrets
 const apiKey = "sk-proj-xxxxx"
-const password = "admin123"
-const token = "ghp_xxxxxxxxxxxx"
+const dbPassword = "prod_password_123"
+const jwtSecret = "my_super_secret_key"
 
 // ✅ CORRECT: Environment variables
-const apiKey = process.env.OPENAI_API_KEY
+const apiKey = process.env.Market_DATA_API_KEY
 if (!apiKey) {
-  throw new Error('OPENAI_API_KEY not configured')
+  throw new Error('API Key not configured')
 }
 ```
 
@@ -204,14 +177,14 @@ if (!apiKey) {
 
 ```javascript
 // ❌ CRITICAL: SQL injection vulnerability
-const query = `SELECT * FROM users WHERE id = ${userId}`
+// User input directly concatenated into string
+const query = `SELECT * FROM portfolios WHERE user_id = ${userId} AND name = '${searchTerm}'`
 await db.query(query)
 
-// ✅ CORRECT: Parameterized queries
-const { data } = await supabase
-  .from('users')
-  .select('*')
-  .eq('id', userId)
+// ✅ CORRECT: Parameterized queries (Generic Example)
+// Inputs are treated as data, not executable code
+const query = 'SELECT * FROM portfolios WHERE user_id = $1 AND name = $2'
+await db.query(query, [userId, searchTerm])
 ```
 
 ### 3. Command Injection (CRITICAL)
@@ -265,72 +238,73 @@ import bcrypt from 'bcrypt'
 const isValid = await bcrypt.compare(password, hashedPassword)
 ```
 
-### 7. Insufficient Authorization (CRITICAL)
+### 7. Broken Access Control (IDOR) (CRITICAL)
 
 ```javascript
-// ❌ CRITICAL: No authorization check
-app.get('/api/user/:id', async (req, res) => {
-  const user = await getUser(req.params.id)
-  res.json(user)
+// ❌ CRITICAL: IDOR (Insecure Direct Object Reference)
+// User A can access User B's watchlist just by changing the ID
+app.get('/api/watchlist/:id', async (req, res) => {
+  const watchlist = await db.query('SELECT * FROM watchlists WHERE id = $1', [req.params.id])
+  res.json(watchlist)
 })
 
-// ✅ CORRECT: Verify user can access resource
-app.get('/api/user/:id', authenticateUser, async (req, res) => {
-  if (req.user.id !== req.params.id && !req.user.isAdmin) {
+// ✅ CORRECT: Verify ownership
+app.get('/api/watchlist/:id', authenticateUser, async (req, res) => {
+  const watchlist = await db.query('SELECT * FROM watchlists WHERE id = $1', [req.params.id])
+
+  // Check if the requesting user owns this resource
+  if (watchlist.user_id !== req.user.id && !req.user.isAdmin) {
     return res.status(403).json({ error: 'Forbidden' })
   }
-  const user = await getUser(req.params.id)
-  res.json(user)
+  res.json(watchlist)
 })
 ```
 
-### 8. Race Conditions in Financial Operations (CRITICAL)
+### 8. Mass Assignment / Privilege Escalation (HIGH)
 
 ```javascript
-// ❌ CRITICAL: Race condition in balance check
-const balance = await getBalance(userId)
-if (balance >= amount) {
-  await withdraw(userId, amount) // Another request could withdraw in parallel!
-}
+// ❌ HIGH: Mass Assignment vulnerability
+// User maliciously sends { "role": "admin", "subscription": "premium" } in the body
+app.put('/api/profile', async (req, res) => {
+  await db.users.update({ where: { id: req.user.id }, data: req.body })
+  res.json({ success: true })
+})
 
-// ✅ CORRECT: Atomic transaction with lock
-await db.transaction(async (trx) => {
-  const balance = await trx('balances')
-    .where({ user_id: userId })
-    .forUpdate() // Lock row
-    .first()
-
-  if (balance.amount < amount) {
-    throw new Error('Insufficient balance')
+// ✅ CORRECT: Allowlist specific fields
+app.put('/api/profile', async (req, res) => {
+  const allowedUpdates = {
+    name: req.body.name,
+    bio: req.body.bio,
+    preferences: req.body.preferences
   }
-
-  await trx('balances')
-    .where({ user_id: userId })
-    .decrement('amount', amount)
+  // Explicitly exclude sensitive fields like role or subscription_status
+  await db.users.update({ where: { id: req.user.id }, data: allowedUpdates })
+  res.json({ success: true })
 })
 ```
 
 ### 9. Insufficient Rate Limiting (HIGH)
 
 ```javascript
-// ❌ HIGH: No rate limiting
-app.post('/api/trade', async (req, res) => {
-  await executeTrade(req.body)
-  res.json({ success: true })
+// ❌ HIGH: No rate limiting (Scraping Risk)
+// A script could scrape all your premium data in seconds
+app.get('/api/market-data/ticker/:symbol', async (req, res) => {
+  const data = await getMarketData(req.params.symbol)
+  res.json(data)
 })
 
-// ✅ CORRECT: Rate limiting
+// ✅ CORRECT: Rate limiting per IP/User
 import rateLimit from 'express-rate-limit'
 
-const tradeLimiter = rateLimit({
-  windowMs: 60 * 1000, // 1 minute
-  max: 10, // 10 requests per minute
-  message: 'Too many trade requests, please try again later'
+const dataApiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  message: 'Data quota exceeded, please upgrade your plan.'
 })
 
-app.post('/api/trade', tradeLimiter, async (req, res) => {
-  await executeTrade(req.body)
-  res.json({ success: true })
+app.get('/api/market-data/ticker/:symbol', dataApiLimiter, async (req, res) => {
+  const data = await getMarketData(req.params.symbol)
+  res.json(data)
 })
 ```
 
@@ -460,8 +434,7 @@ When reviewing PRs, post inline comments:
 
 ---
 
-> Security review performed by Claude Code security-reviewer agent
-> For questions, see docs/SECURITY.md
+> Security review performed by security-reviewer agent
 ```
 
 ## When to Run Security Reviews
