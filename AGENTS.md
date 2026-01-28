@@ -59,6 +59,12 @@ Usage notes:
 </skill>
 
 <skill>
+<name>composition-patterns</name>
+<description>React composition patterns that scale. Use when refactoring components with</description>
+<location>project</location>
+</skill>
+
+<skill>
 <name>dispatching-parallel-agents</name>
 <description>Use when facing 2+ independent tasks that can be worked on without shared state or sequential dependencies</description>
 <location>project</location>
@@ -115,6 +121,12 @@ Usage notes:
 <skill>
 <name>react-best-practices</name>
 <description>React and Next.js performance optimization guidelines from Vercel Engineering. This skill should be used when writing, reviewing, or refactoring React/Next.js code to ensure optimal performance patterns. Triggers on tasks involving React components, Next.js pages, data fetching, bundle optimization, or performance improvements.</description>
+<location>project</location>
+</skill>
+
+<skill>
+<name>react-native-skills</name>
+<description>React Native and Expo best practices for building performant mobile apps. Use</description>
 <location>project</location>
 </skill>
 

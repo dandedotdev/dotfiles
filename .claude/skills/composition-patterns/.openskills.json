@@ -2,6 +2,6 @@
   "source": "vercel-labs/agent-skills",
   "sourceType": "git",
   "repoUrl": "https://github.com/vercel-labs/agent-skills",
-  "subpath": "skills/claude.ai/vercel-deploy-claimable",
-  "installedAt": "2026-01-28T06:45:16.902Z"
+  "subpath": "skills/composition-patterns",
+  "installedAt": "2026-01-28T06:45:16.917Z"
 }
