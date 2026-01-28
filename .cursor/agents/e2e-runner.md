@@ -126,7 +126,7 @@ When Agent Browser isn't available or for complex test suites, fall back to Play
 npx playwright test
 
 # Run specific test file
-npx playwright test __tests__/e2e/api/stocks.spec.ts
+npx playwright test tests/e2e/api/stocks.spec.ts
 
 # Run tests in headed mode (see browser)
 npx playwright test --headed
@@ -222,7 +222,7 @@ c) Run in CI/CD
 ### Test File Organization
 
 ```
-__tests__/
+tests/
 ├── e2e/                       # End-to-end user journeys
 │   ├── auth/                  # Authentication flows
 │   │   ├── login.spec.ts
@@ -238,7 +238,7 @@ __tests__/
 ### Page Object Model Pattern
 
 ```typescript
-// __tests__/e2e/pages/QuotesPage.ts
+// tests/e2e/pages/QuotesPage.ts
 import { Page, Locator, expect } from '@playwright/test'
 
 export class QuotesPage {
@@ -280,7 +280,7 @@ export class QuotesPage {
 **1. Quotes Visualization Flow**
 
 ```typescript
-// __tests__/e2e/quotes/view-quotes.spec.ts
+// tests/e2e/quotes/view-quotes.spec.ts
 import { test, expect } from '@playwright/test'
 import { QuotesPage } from '../pages/QuotesPage'
 
@@ -325,7 +325,7 @@ test.describe('Quotes Page', () => {
 **2. Authentication Flow**
 
 ```typescript
-// __tests__/e2e/auth/login.spec.ts
+// tests/e2e/auth/login.spec.ts
 import { test, expect } from '@playwright/test'
 
 test('user can login and access quotes', async ({ page }) => {
@@ -345,7 +345,7 @@ test('user can login and access quotes', async ({ page }) => {
 **3. API Integration Test (Rust Backend)**
 
 ```typescript
-// __tests__/e2e/api/stocks.spec.ts
+// tests/e2e/api/stocks.spec.ts
 import { test, expect } from '@playwright/test'
 
 test('GET /api/stocks returns correct schema', async ({ request }) => {
@@ -378,7 +378,7 @@ test('GET /api/stocks returns correct schema', async ({ request }) => {
 import { defineConfig, devices } from '@playwright/test'
 
 export default defineConfig({
-  testDir: './__tests__/e2e',
+  testDir: './tests/e2e',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
@@ -429,10 +429,10 @@ export default defineConfig({
 
 ```bash
 # Run test multiple times to check stability
-npx playwright test __tests__/api/stocks.spec.ts --repeat-each=10
+npx playwright test tests/api/stocks.spec.ts --repeat-each=10
 
 # Run specific test with retries
-npx playwright test __tests__/api/stocks.spec.ts --retries=3
+npx playwright test tests/api/stocks.spec.ts --retries=3
 ```
 
 ### Quarantine Pattern
@@ -597,7 +597,7 @@ jobs:
 ## Failed Tests
 
 ### 1. search with special characters
-**File:** `__tests__/e2e/api/stocks.spec.ts:45`
+**File:** `tests/e2e/api/stocks.spec.ts:45`
 **Error:** Expected element to be visible, but was not found
 **Screenshot:** artifacts/api-stocks-failed.png
 **Trace:** artifacts/trace-123.zip
