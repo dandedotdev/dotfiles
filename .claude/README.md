@@ -6,12 +6,14 @@ The agent skills configured in this directory were installed and managed using *
 
 I gratefully acknowledge the following repositories for providing the skills currently available in this project:
 
+* **[antfu/skills](https://github.com/antfu/skills)**
 * **[anthropics/skills](https://github.com/anthropics/skills)**
 * **[Dimillian/Skills](https://github.com/Dimillian/Skills)**
 * **[harryworld/Xcode26-Agent-Skills](https://github.com/harryworld/Xcode26-Agent-Skills)**
 * **[nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)**
 * **[obra/superpowers](https://github.com/obra/superpowers)**
 * **[pzep1/xcode-build-skill](https://github.com/pzep1/xcode-build-skill)**
+* **[slidevjs/slidev](https://github.com/slidevjs/slidev)**
 * **[spences10/svelte-claude-skills](https://github.com/spences10/svelte-claude-skills)**
 * **[vercel/turborepo](https://github.com/vercel/turborepo)**
 * **[vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills)**

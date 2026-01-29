@@ -113,6 +113,12 @@ Usage notes:
 </skill>
 
 <skill>
+<name>pnpm</name>
+<description>Node.js package manager with strict dependency resolution. Use when running pnpm specific commands, configuring workspaces, or managing dependencies with catalogs, patches, or overrides.</description>
+<location>project</location>
+</skill>
+
+<skill>
 <name>pptx</name>
 <description>"Presentation creation, editing, and analysis. When Claude needs to work with presentations (.pptx files) for: (1) Creating new presentations, (2) Modifying or editing content, (3) Working with layouts, (4) Adding comments or speaker notes, or any other presentation tasks"</description>
 <location>project</location>
@@ -205,6 +211,12 @@ Usage notes:
 <skill>
 <name>verification-before-completion</name>
 <description>Use when about to claim work is complete, fixed, or passing, before committing or creating PRs - requires running verification commands and confirming output before making any success claims; evidence before assertions always</description>
+<location>project</location>
+</skill>
+
+<skill>
+<name>vitest</name>
+<description>Vitest fast unit testing framework powered by Vite with Jest-compatible API. Use when writing tests, mocking, configuring coverage, or working with test filtering and fixtures.</description>
 <location>project</location>
 </skill>
 
