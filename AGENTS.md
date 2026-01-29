@@ -143,6 +143,12 @@ Usage notes:
 </skill>
 
 <skill>
+<name>remotion</name>
+<description>Best practices for Remotion - Video creation in React</description>
+<location>project</location>
+</skill>
+
+<skill>
 <name>requesting-code-review</name>
 <description>Use when completing tasks, implementing major features, or before merging to verify work meets requirements</description>
 <location>project</location>

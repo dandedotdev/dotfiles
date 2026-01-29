@@ -13,6 +13,7 @@ I gratefully acknowledge the following repositories for providing the skills cur
 * **[nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)**
 * **[obra/superpowers](https://github.com/obra/superpowers)**
 * **[pzep1/xcode-build-skill](https://github.com/pzep1/xcode-build-skill)**
+* **[remotion-dev/skills](https://github.com/remotion-dev/skills)**
 * **[slidevjs/slidev](https://github.com/slidevjs/slidev)**
 * **[spences10/svelte-claude-skills](https://github.com/spences10/svelte-claude-skills)**
 * **[vercel/turborepo](https://github.com/vercel/turborepo)**
