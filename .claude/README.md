@@ -23,6 +23,7 @@ Here are some awesome Claude Code Configuration:
 
 * **[affaan-m/everything-claude-code](https://github.com/affaan-m/everything-claude-code)**
 * **[anthropics/claude-cookbooks](https://github.com/anthropics/claude-cookbooks)**
+* **[anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official)**
 
 ## Requirements
 
