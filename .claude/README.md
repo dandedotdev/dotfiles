@@ -18,6 +18,7 @@ I gratefully acknowledge the following repositories for providing the skills cur
 * **[spences10/svelte-claude-skills](https://github.com/spences10/svelte-claude-skills)**
 * **[vercel/turborepo](https://github.com/vercel/turborepo)**
 * **[vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills)**
+* **[vercel-labs/skills](https://github.com/vercel-labs/skills)**
 
 Here are some awesome Claude Code Configuration:
 

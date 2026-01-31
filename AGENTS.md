@@ -71,6 +71,12 @@ Usage notes:
 </skill>
 
 <skill>
+<name>find-skills</name>
+<description>Helps users discover and install agent skills when they ask questions like "how do I do X", "find a skill for X", "is there a skill that can...", or express interest in extending capabilities. This skill should be used when the user is looking for functionality that might exist as an installable skill.</description>
+<location>project</location>
+</skill>
+
+<skill>
 <name>finishing-a-development-branch</name>
 <description>Use when implementation is complete, all tests pass, and you need to decide how to integrate the work - guides completion of development work by presenting structured options for merge, PR, or cleanup</description>
 <location>project</location>
