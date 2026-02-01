@@ -1,0 +1,7 @@
+{
+  "source": "anthropics/claude-plugins-official",
+  "sourceType": "git",
+  "repoUrl": "https://github.com/anthropics/claude-plugins-official",
+  "subpath": "plugins/playground/skills/playground",
+  "installedAt": "2026-02-01T05:47:15.232Z"
+}
