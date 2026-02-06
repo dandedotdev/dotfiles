@@ -8,7 +8,10 @@ I gratefully acknowledge the following repositories for providing the skills cur
 
 * **[antfu/skills](https://github.com/antfu/skills)**
 * **[anthropics/skills](https://github.com/anthropics/skills)**
+* **[better-auth/skills](https://github.com/better-auth/skills)**
+* **[coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills)**
 * **[Dimillian/Skills](https://github.com/Dimillian/Skills)**
+* **[giuseppe-trisciuoglio/developer-kit](https://github.com/giuseppe-trisciuoglio/developer-kit)**
 * **[harryworld/Xcode26-Agent-Skills](https://github.com/harryworld/Xcode26-Agent-Skills)**
 * **[nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)**
 * **[obra/superpowers](https://github.com/obra/superpowers)**
@@ -18,7 +21,10 @@ I gratefully acknowledge the following repositories for providing the skills cur
 * **[spences10/svelte-claude-skills](https://github.com/spences10/svelte-claude-skills)**
 * **[vercel/turborepo](https://github.com/vercel/turborepo)**
 * **[vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills)**
+* **[vercel-labs/agent-browser](https://github.com/vercel-labs/agent-browser)**
+* **[vercel-labs/next-skills](https://github.com/vercel-labs/next-skills)**
 * **[vercel-labs/skills](https://github.com/vercel-labs/skills)**
+* **[wshobson/agents](https://github.com/wshobson/agents)**
 
 Here are some awesome Claude Code Configuration:
 

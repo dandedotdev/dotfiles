@@ -1,0 +1,7 @@
+{
+  "source": "wshobson/agents",
+  "sourceType": "git",
+  "repoUrl": "https://github.com/wshobson/agents",
+  "subpath": "plugins/accessibility-compliance/skills/wcag-audit-patterns",
+  "installedAt": "2026-02-06T14:11:21.686Z"
+}

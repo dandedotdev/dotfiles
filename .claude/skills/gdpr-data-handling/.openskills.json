@@ -1,0 +1,7 @@
+{
+  "source": "wshobson/agents",
+  "sourceType": "git",
+  "repoUrl": "https://github.com/wshobson/agents",
+  "subpath": "plugins/hr-legal-compliance/skills/gdpr-data-handling",
+  "installedAt": "2026-02-06T14:11:21.689Z"
+}
