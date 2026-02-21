@@ -13,6 +13,8 @@ I gratefully acknowledge the following repositories for providing the skills cur
 * **[Dimillian/Skills](https://github.com/Dimillian/Skills)**
 * **[giuseppe-trisciuoglio/developer-kit](https://github.com/giuseppe-trisciuoglio/developer-kit)**
 * **[harryworld/Xcode26-Agent-Skills](https://github.com/harryworld/Xcode26-Agent-Skills)**
+* **[lobehub/lobehub](https://github.com/lobehub/lobehub)**
+* **[mattpocock/skills](https://github.com/mattpocock/skills)**
 * **[nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)**
 * **[obra/superpowers](https://github.com/obra/superpowers)**
 * **[pzep1/xcode-build-skill](https://github.com/pzep1/xcode-build-skill)**
